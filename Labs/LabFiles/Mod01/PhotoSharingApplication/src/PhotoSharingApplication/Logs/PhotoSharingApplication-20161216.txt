@@ -1,0 +1,1252 @@
+2016-12-16T10:08:36.8458170+01:00  [INF] User profile is available. Using '"C:\Users\Administrator\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest. (7ac5e29c)
+2016-12-16T10:08:49.3653781+01:00  [INF] Executed DbCommand (223ms) [Parameters=[], CommandType='Text', CommandTimeout='60']
+CREATE DATABASE [PhotoSharingApplication-lab01]; (6438bdd5)
+2016-12-16T10:08:49.4230906+01:00  [INF] Executed DbCommand (53ms) [Parameters=[], CommandType='Text', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5 EXEC(N'ALTER DATABASE [PhotoSharingApplication-lab01] SET READ_COMMITTED_SNAPSHOT ON;'); (6438bdd5)
+2016-12-16T10:08:49.5306517+01:00  [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+); (6438bdd5)
+2016-12-16T10:08:49.5676995+01:00  [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory'); (6438bdd5)
+2016-12-16T10:08:49.5786622+01:00  [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId]; (6438bdd5)
+2016-12-16T10:08:49.6617032+01:00  [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [AspNetRoles] (
+    [Id] nvarchar(450) NOT NULL,
+    [ConcurrencyStamp] nvarchar(max),
+    [Name] nvarchar(256),
+    [NormalizedName] nvarchar(256),
+    CONSTRAINT [PK_AspNetRoles] PRIMARY KEY ([Id])
+); (6438bdd5)
+2016-12-16T10:08:49.6657211+01:00  [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [AspNetUserTokens] (
+    [UserId] nvarchar(450) NOT NULL,
+    [LoginProvider] nvarchar(450) NOT NULL,
+    [Name] nvarchar(450) NOT NULL,
+    [Value] nvarchar(max),
+    CONSTRAINT [PK_AspNetUserTokens] PRIMARY KEY ([UserId], [LoginProvider], [Name])
+); (6438bdd5)
+2016-12-16T10:08:49.6707229+01:00  [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [AspNetUsers] (
+    [Id] nvarchar(450) NOT NULL,
+    [AccessFailedCount] int NOT NULL,
+    [ConcurrencyStamp] nvarchar(max),
+    [Email] nvarchar(256),
+    [EmailConfirmed] bit NOT NULL,
+    [LockoutEnabled] bit NOT NULL,
+    [LockoutEnd] datetimeoffset,
+    [NormalizedEmail] nvarchar(256),
+    [NormalizedUserName] nvarchar(256),
+    [PasswordHash] nvarchar(max),
+    [PhoneNumber] nvarchar(max),
+    [PhoneNumberConfirmed] bit NOT NULL,
+    [SecurityStamp] nvarchar(max),
+    [TwoFactorEnabled] bit NOT NULL,
+    [UserName] nvarchar(256),
+    CONSTRAINT [PK_AspNetUsers] PRIMARY KEY ([Id])
+); (6438bdd5)
+2016-12-16T10:08:49.6747215+01:00  [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [AspNetRoleClaims] (
+    [Id] int NOT NULL IDENTITY,
+    [ClaimType] nvarchar(max),
+    [ClaimValue] nvarchar(max),
+    [RoleId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_AspNetRoleClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE
+); (6438bdd5)
+2016-12-16T10:08:49.6797059+01:00  [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [AspNetUserClaims] (
+    [Id] int NOT NULL IDENTITY,
+    [ClaimType] nvarchar(max),
+    [ClaimValue] nvarchar(max),
+    [UserId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_AspNetUserClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+); (6438bdd5)
+2016-12-16T10:08:49.6837060+01:00  [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [AspNetUserLogins] (
+    [LoginProvider] nvarchar(450) NOT NULL,
+    [ProviderKey] nvarchar(450) NOT NULL,
+    [ProviderDisplayName] nvarchar(max),
+    [UserId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_AspNetUserLogins] PRIMARY KEY ([LoginProvider], [ProviderKey]),
+    CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+); (6438bdd5)
+2016-12-16T10:08:49.6877038+01:00  [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [AspNetUserRoles] (
+    [UserId] nvarchar(450) NOT NULL,
+    [RoleId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_AspNetUserRoles] PRIMARY KEY ([UserId], [RoleId]),
+    CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+); (6438bdd5)
+2016-12-16T10:08:49.6897039+01:00  [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [RoleNameIndex] ON [AspNetRoles] ([NormalizedName]); (6438bdd5)
+2016-12-16T10:08:49.6927037+01:00  [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_AspNetRoleClaims_RoleId] ON [AspNetRoleClaims] ([RoleId]); (6438bdd5)
+2016-12-16T10:08:49.6957032+01:00  [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_AspNetUserClaims_UserId] ON [AspNetUserClaims] ([UserId]); (6438bdd5)
+2016-12-16T10:08:49.6977040+01:00  [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_AspNetUserLogins_UserId] ON [AspNetUserLogins] ([UserId]); (6438bdd5)
+2016-12-16T10:08:49.7007183+01:00  [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_AspNetUserRoles_RoleId] ON [AspNetUserRoles] ([RoleId]); (6438bdd5)
+2016-12-16T10:08:49.7037185+01:00  [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_AspNetUserRoles_UserId] ON [AspNetUserRoles] ([UserId]); (6438bdd5)
+2016-12-16T10:08:49.7080679+01:00  [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [EmailIndex] ON [AspNetUsers] ([NormalizedEmail]); (6438bdd5)
+2016-12-16T10:08:49.7110719+01:00  [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE UNIQUE INDEX [UserNameIndex] ON [AspNetUsers] ([NormalizedUserName]) WHERE [NormalizedUserName] IS NOT NULL; (6438bdd5)
+2016-12-16T10:08:49.7160537+01:00  [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'00000000000000_CreateIdentitySchema', N'1.1.0-rtm-22752'); (6438bdd5)
+2016-12-16T10:08:49.7492363+01:00  [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+DROP INDEX [IX_AspNetUserRoles_UserId] ON [AspNetUserRoles]; (6438bdd5)
+2016-12-16T10:08:49.7522320+01:00  [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+DROP INDEX [RoleNameIndex] ON [AspNetRoles]; (6438bdd5)
+2016-12-16T10:08:49.7582329+01:00  [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [Photos] (
+    [Id] int NOT NULL IDENTITY,
+    [ApplicationUserId] nvarchar(450),
+    [CreatedDate] datetime2 NOT NULL,
+    [Description] nvarchar(max),
+    [ImageMimeType] nvarchar(max),
+    [PhotoFile] varbinary(max),
+    [Title] nvarchar(max) NOT NULL,
+    CONSTRAINT [PK_Photos] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Photos_AspNetUsers_ApplicationUserId] FOREIGN KEY ([ApplicationUserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE NO ACTION
+); (6438bdd5)
+2016-12-16T10:08:49.7622526+01:00  [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [Comments] (
+    [Id] int NOT NULL IDENTITY,
+    [ApplicationUserId] nvarchar(450),
+    [Body] nvarchar(max),
+    [PhotoId] int NOT NULL,
+    [Subject] nvarchar(250) NOT NULL,
+    CONSTRAINT [PK_Comments] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Comments_AspNetUsers_ApplicationUserId] FOREIGN KEY ([ApplicationUserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Comments_Photos_PhotoId] FOREIGN KEY ([PhotoId]) REFERENCES [Photos] ([Id]) ON DELETE CASCADE
+); (6438bdd5)
+2016-12-16T10:08:49.7652329+01:00  [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE UNIQUE INDEX [RoleNameIndex] ON [AspNetRoles] ([NormalizedName]) WHERE [NormalizedName] IS NOT NULL; (6438bdd5)
+2016-12-16T10:08:49.7692330+01:00  [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_Comments_ApplicationUserId] ON [Comments] ([ApplicationUserId]); (6438bdd5)
+2016-12-16T10:08:49.7722363+01:00  [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_Comments_PhotoId] ON [Comments] ([PhotoId]); (6438bdd5)
+2016-12-16T10:08:49.7762352+01:00  [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_Photos_ApplicationUserId] ON [Photos] ([ApplicationUserId]); (6438bdd5)
+2016-12-16T10:08:49.7797626+01:00  [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20161212184225_PhotoComments', N'1.1.0-rtm-22752'); (6438bdd5)
+2016-12-16T10:08:50.2956937+01:00  [INF] Executed DbCommand (53ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2016-12-16T10:08:50.3816930+01:00  [INF] Executed DbCommand (5ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2016-12-16T10:08:50.5374447+01:00  [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (Size = 450), @p1='?', @p2='?' (Size = 4000), @p3='?' (Size = 256), @p4='?', @p5='?', @p6='?', @p7='?' (Size = 256), @p8='?' (Size = 256), @p9='?' (Size = 4000), @p10='?' (Size = 4000), @p11='?', @p12='?' (Size = 4000), @p13='?', @p14='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AspNetUsers] ([Id], [AccessFailedCount], [ConcurrencyStamp], [Email], [EmailConfirmed], [LockoutEnabled], [LockoutEnd], [NormalizedEmail], [NormalizedUserName], [PasswordHash], [PhoneNumber], [PhoneNumberConfirmed], [SecurityStamp], [TwoFactorEnabled], [UserName])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14); (6438bdd5)
+2016-12-16T10:08:50.5534436+01:00  [INF] Executed DbCommand (6ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2016-12-16T10:08:50.5674454+01:00  [INF] Executed DbCommand (3ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2016-12-16T10:08:50.5754464+01:00  [INF] Executed DbCommand (0ms) [Parameters=[@p0='?' (Size = 450), @p1='?', @p2='?' (Size = 4000), @p3='?' (Size = 256), @p4='?', @p5='?', @p6='?', @p7='?' (Size = 256), @p8='?' (Size = 256), @p9='?' (Size = 4000), @p10='?' (Size = 4000), @p11='?', @p12='?' (Size = 4000), @p13='?', @p14='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AspNetUsers] ([Id], [AccessFailedCount], [ConcurrencyStamp], [Email], [EmailConfirmed], [LockoutEnabled], [LockoutEnd], [NormalizedEmail], [NormalizedUserName], [PasswordHash], [PhoneNumber], [PhoneNumberConfirmed], [SecurityStamp], [TwoFactorEnabled], [UserName])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14); (6438bdd5)
+2016-12-16T10:08:50.5834741+01:00  [INF] Executed DbCommand (4ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2016-12-16T10:08:50.6000726+01:00  [INF] Executed DbCommand (4ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2016-12-16T10:08:50.6090749+01:00  [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (Size = 450), @p1='?', @p2='?' (Size = 4000), @p3='?' (Size = 256), @p4='?', @p5='?', @p6='?', @p7='?' (Size = 256), @p8='?' (Size = 256), @p9='?' (Size = 4000), @p10='?' (Size = 4000), @p11='?', @p12='?' (Size = 4000), @p13='?', @p14='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AspNetUsers] ([Id], [AccessFailedCount], [ConcurrencyStamp], [Email], [EmailConfirmed], [LockoutEnabled], [LockoutEnd], [NormalizedEmail], [NormalizedUserName], [PasswordHash], [PhoneNumber], [PhoneNumberConfirmed], [SecurityStamp], [TwoFactorEnabled], [UserName])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14); (6438bdd5)
+2016-12-16T10:08:50.6310742+01:00  [INF] Executed DbCommand (6ms) [Parameters=[@__toAdd_Title_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title]
+FROM [Photos] AS [p]
+WHERE [p].[Title] = @__toAdd_Title_0 (6438bdd5)
+2016-12-16T10:08:50.6910824+01:00  [INF] Executed DbCommand (4ms) [Parameters=[@__toAdd_Title_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title]
+FROM [Photos] AS [p]
+WHERE [p].[Title] = @__toAdd_Title_0 (6438bdd5)
+2016-12-16T10:08:50.7015822+01:00  [INF] Executed DbCommand (3ms) [Parameters=[@__toAdd_Title_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title]
+FROM [Photos] AS [p]
+WHERE [p].[Title] = @__toAdd_Title_0 (6438bdd5)
+2016-12-16T10:08:50.7085822+01:00  [INF] Executed DbCommand (3ms) [Parameters=[@__toAdd_Title_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title]
+FROM [Photos] AS [p]
+WHERE [p].[Title] = @__toAdd_Title_0 (6438bdd5)
+2016-12-16T10:08:50.7155814+01:00  [INF] Executed DbCommand (3ms) [Parameters=[@__toAdd_Title_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title]
+FROM [Photos] AS [p]
+WHERE [p].[Title] = @__toAdd_Title_0 (6438bdd5)
+2016-12-16T10:08:50.7485816+01:00  [INF] Executed DbCommand (23ms) [Parameters=[@__toAdd_Title_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title]
+FROM [Photos] AS [p]
+WHERE [p].[Title] = @__toAdd_Title_0 (6438bdd5)
+2016-12-16T10:08:50.7575963+01:00  [INF] Executed DbCommand (3ms) [Parameters=[@__toAdd_Title_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title]
+FROM [Photos] AS [p]
+WHERE [p].[Title] = @__toAdd_Title_0 (6438bdd5)
+2016-12-16T10:08:50.7645816+01:00  [INF] Executed DbCommand (3ms) [Parameters=[@__toAdd_Title_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title]
+FROM [Photos] AS [p]
+WHERE [p].[Title] = @__toAdd_Title_0 (6438bdd5)
+2016-12-16T10:08:50.7715827+01:00  [INF] Executed DbCommand (3ms) [Parameters=[@__toAdd_Title_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title]
+FROM [Photos] AS [p]
+WHERE [p].[Title] = @__toAdd_Title_0 (6438bdd5)
+2016-12-16T10:08:50.7785898+01:00  [INF] Executed DbCommand (3ms) [Parameters=[@__toAdd_Title_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title]
+FROM [Photos] AS [p]
+WHERE [p].[Title] = @__toAdd_Title_0 (6438bdd5)
+2016-12-16T10:08:50.7865889+01:00  [INF] Executed DbCommand (3ms) [Parameters=[@__toAdd_Title_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title]
+FROM [Photos] AS [p]
+WHERE [p].[Title] = @__toAdd_Title_0 (6438bdd5)
+2016-12-16T10:08:50.8176026+01:00  [INF] Executed DbCommand (19ms) [Parameters=[@__toAdd_Title_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title]
+FROM [Photos] AS [p]
+WHERE [p].[Title] = @__toAdd_Title_0 (6438bdd5)
+2016-12-16T10:08:50.8256013+01:00  [INF] Executed DbCommand (3ms) [Parameters=[@__toAdd_Title_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title]
+FROM [Photos] AS [p]
+WHERE [p].[Title] = @__toAdd_Title_0 (6438bdd5)
+2016-12-16T10:08:51.3833657+01:00  [INF] Executed DbCommand (530ms) [Parameters=[@p0='?' (Size = 450), @p1='?', @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (Size = -1), @p5='?' (Size = 4000), @p6='?' (Size = 450), @p7='?', @p8='?' (Size = 4000), @p9='?' (Size = 4000), @p10='?' (Size = -1), @p11='?' (Size = 4000), @p12='?' (Size = 450), @p13='?', @p14='?' (Size = 4000), @p15='?' (Size = 4000), @p16='?' (Size = -1), @p17='?' (Size = 4000), @p18='?' (Size = 450), @p19='?', @p20='?' (Size = 4000), @p21='?' (Size = 4000), @p22='?' (Size = -1), @p23='?' (Size = 4000), @p24='?' (Size = 450), @p25='?', @p26='?' (Size = 4000), @p27='?' (Size = 4000), @p28='?' (Size = -1), @p29='?' (Size = 4000), @p30='?' (Size = 450), @p31='?', @p32='?' (Size = 4000), @p33='?' (Size = 4000), @p34='?' (Size = -1), @p35='?' (Size = 4000), @p36='?' (Size = 450), @p37='?', @p38='?' (Size = 4000), @p39='?' (Size = 4000), @p40='?' (Size = -1), @p41='?' (Size = 4000), @p42='?' (Size = 450), @p43='?', @p44='?' (Size = 4000), @p45='?' (Size = 4000), @p46='?' (Size = -1), @p47='?' (Size = 4000), @p48='?' (Size = 450), @p49='?', @p50='?' (Size = 4000), @p51='?' (Size = 4000), @p52='?' (Size = -1), @p53='?' (Size = 4000), @p54='?' (Size = 450), @p55='?', @p56='?' (Size = 4000), @p57='?' (Size = 4000), @p58='?' (Size = -1), @p59='?' (Size = 4000), @p60='?' (Size = 450), @p61='?', @p62='?' (Size = 4000), @p63='?' (Size = 4000), @p64='?' (Size = -1), @p65='?' (Size = 4000), @p66='?' (Size = 450), @p67='?', @p68='?' (Size = 4000), @p69='?' (Size = 4000), @p70='?' (Size = -1), @p71='?' (Size = 4000), @p72='?' (Size = 450), @p73='?', @p74='?' (Size = 4000), @p75='?' (Size = 4000), @p76='?' (Size = -1), @p77='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DECLARE @toInsert0 TABLE ([ApplicationUserId] nvarchar(450), [CreatedDate] datetime2, [Description] nvarchar(max), [ImageMimeType] nvarchar(max), [PhotoFile] varbinary(max), [Title] nvarchar(max), [_Position] [int]);
+INSERT INTO @toInsert0
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, 0),
+(@p6, @p7, @p8, @p9, @p10, @p11, 1),
+(@p12, @p13, @p14, @p15, @p16, @p17, 2),
+(@p18, @p19, @p20, @p21, @p22, @p23, 3),
+(@p24, @p25, @p26, @p27, @p28, @p29, 4),
+(@p30, @p31, @p32, @p33, @p34, @p35, 5),
+(@p36, @p37, @p38, @p39, @p40, @p41, 6),
+(@p42, @p43, @p44, @p45, @p46, @p47, 7),
+(@p48, @p49, @p50, @p51, @p52, @p53, 8),
+(@p54, @p55, @p56, @p57, @p58, @p59, 9),
+(@p60, @p61, @p62, @p63, @p64, @p65, 10),
+(@p66, @p67, @p68, @p69, @p70, @p71, 11),
+(@p72, @p73, @p74, @p75, @p76, @p77, 12);
+
+DECLARE @inserted0 TABLE ([Id] int, [_Position] [int]);
+MERGE [Photos] USING @toInsert0 AS i ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([ApplicationUserId], [CreatedDate], [Description], [ImageMimeType], [PhotoFile], [Title])
+VALUES (i.[ApplicationUserId], i.[CreatedDate], i.[Description], i.[ImageMimeType], i.[PhotoFile], i.[Title])
+OUTPUT INSERTED.[Id], i._Position
+INTO @inserted0;
+
+SELECT [t].[Id] FROM [Photos] t
+INNER JOIN @inserted0 i ON ([t].[Id] = [i].[Id])
+ORDER BY [i].[_Position]; (6438bdd5)
+2016-12-16T10:08:51.4173695+01:00  [INF] Executed DbCommand (11ms) [Parameters=[@p78='?' (Size = 450), @p79='?' (Size = 4000), @p80='?', @p81='?' (Size = 250), @p82='?' (Size = 450), @p83='?' (Size = 4000), @p84='?', @p85='?' (Size = 250), @p86='?' (Size = 450), @p87='?' (Size = 4000), @p88='?', @p89='?' (Size = 250), @p90='?' (Size = 450), @p91='?' (Size = 4000), @p92='?', @p93='?' (Size = 250), @p94='?' (Size = 450), @p95='?' (Size = 4000), @p96='?', @p97='?' (Size = 250), @p98='?' (Size = 450), @p99='?' (Size = 4000), @p100='?', @p101='?' (Size = 250), @p102='?' (Size = 450), @p103='?' (Size = 4000), @p104='?', @p105='?' (Size = 250), @p106='?' (Size = 450), @p107='?' (Size = 4000), @p108='?', @p109='?' (Size = 250)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DECLARE @toInsert0 TABLE ([ApplicationUserId] nvarchar(450), [Body] nvarchar(max), [PhotoId] int, [Subject] nvarchar(250), [_Position] [int]);
+INSERT INTO @toInsert0
+VALUES (@p78, @p79, @p80, @p81, 0),
+(@p82, @p83, @p84, @p85, 1),
+(@p86, @p87, @p88, @p89, 2),
+(@p90, @p91, @p92, @p93, 3),
+(@p94, @p95, @p96, @p97, 4),
+(@p98, @p99, @p100, @p101, 5),
+(@p102, @p103, @p104, @p105, 6),
+(@p106, @p107, @p108, @p109, 7);
+
+DECLARE @inserted0 TABLE ([Id] int, [_Position] [int]);
+MERGE [Comments] USING @toInsert0 AS i ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([ApplicationUserId], [Body], [PhotoId], [Subject])
+VALUES (i.[ApplicationUserId], i.[Body], i.[PhotoId], i.[Subject])
+OUTPUT INSERTED.[Id], i._Position
+INTO @inserted0;
+
+SELECT [t].[Id] FROM [Comments] t
+INNER JOIN @inserted0 i ON ([t].[Id] = [i].[Id])
+ORDER BY [i].[_Position]; (6438bdd5)
+2016-12-16T10:08:52.1183296+01:00 0HL15ICJPTQ1C [INF] Request starting HTTP/1.1 DEBUG http://localhost:3493/  0 (e5be5b71)
+2016-12-16T10:08:52.1183296+01:00 0HL15ICJPTQ1B [INF] Request starting HTTP/1.1 GET http://localhost:3493/   (e5be5b71)
+2016-12-16T10:08:52.2328929+01:00 0HL15ICJPTQ1C [INF] Request finished in 147.5333ms 200  (15c52c40)
+2016-12-16T10:08:52.5966547+01:00 0HL15ICJPTQ1B [INF] Executing action method "PhotoSharingApplication.Controllers.HomeController.Index (PhotoSharingApplication)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:08:54.3357943+01:00 0HL15ICJPTQ1B [INF] Executing ViewResult, running view at path "/Views/Home/Index.cshtml". (9707eebe)
+2016-12-16T10:08:54.5473215+01:00 0HL15ICJPTQ1B [INF] Executed DbCommand (11ms) [Parameters=[@__p_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title], [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [Photos] AS [p]
+LEFT JOIN [AspNetUsers] AS [a] ON [p].[ApplicationUserId] = [a].[Id]
+ORDER BY [p].[CreatedDate] DESC (6438bdd5)
+2016-12-16T10:08:55.7567603+01:00 0HL15ICJPTQ1B [INF] Executed action "PhotoSharingApplication.Controllers.HomeController.Index (PhotoSharingApplication)" in 3205.4066ms (afa2e885)
+2016-12-16T10:08:55.8597735+01:00 0HL15ICJPTQ1D [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/2   (e5be5b71)
+2016-12-16T10:08:55.8607835+01:00 0HL15ICJPTQ1E [INF] Request starting HTTP/1.1 GET http://localhost:3493/css/site.css   (e5be5b71)
+2016-12-16T10:08:55.8857775+01:00 0HL15ICJPTQ1G [INF] Request starting HTTP/1.1 GET http://localhost:3493/lib/bootstrap/dist/css/bootstrap.css   (e5be5b71)
+2016-12-16T10:08:55.8857775+01:00 0HL15ICJPTQ1F [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/3   (e5be5b71)
+2016-12-16T10:08:55.8892784+01:00 0HL15ICJPTQ1B [INF] Request finished in 3809.5353ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-16T10:08:55.9116119+01:00 0HL15ICJPTQ1H [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/1   (e5be5b71)
+2016-12-16T10:08:55.9146137+01:00 0HL15ICJPTQ1I [INF] Request starting HTTP/1.1 GET http://localhost:3493/lib/jquery/dist/jquery.js   (e5be5b71)
+2016-12-16T10:08:55.9496143+01:00 0HL15ICJPTQ1G [INF] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap.css"'. Physical path: '"C:\CM\Web\ASPNETCORE_NEW\Labs\LabFiles\Mod01\PhotoSharingApplication\src\PhotoSharingApplication\wwwroot\lib\bootstrap\dist\css\bootstrap.css"' (27b0a520)
+2016-12-16T10:08:55.9496143+01:00 0HL15ICJPTQ1I [INF] Sending file. Request path: '"/lib/jquery/dist/jquery.js"'. Physical path: '"C:\CM\Web\ASPNETCORE_NEW\Labs\LabFiles\Mod01\PhotoSharingApplication\src\PhotoSharingApplication\wwwroot\lib\jquery\dist\jquery.js"' (27b0a520)
+2016-12-16T10:08:55.9496143+01:00 0HL15ICJPTQ1E [INF] Sending file. Request path: '"/css/site.css"'. Physical path: '"C:\CM\Web\ASPNETCORE_NEW\Labs\LabFiles\Mod01\PhotoSharingApplication\src\PhotoSharingApplication\wwwroot\css\site.css"' (27b0a520)
+2016-12-16T10:08:55.9696144+01:00 0HL15ICJPTQ1E [INF] Request finished in 131.1515ms 200 text/css (15c52c40)
+2016-12-16T10:08:55.9766125+01:00 0HL15ICJPTQ1J [INF] Request starting HTTP/1.1 GET http://localhost:3493/lib/bootstrap/dist/js/bootstrap.js   (e5be5b71)
+2016-12-16T10:08:55.9826138+01:00 0HL15ICJPTQ1G [INF] Request finished in 145.5827ms 200 text/css (15c52c40)
+2016-12-16T10:08:56.0086257+01:00 0HL15ICJPTQ1J [INF] Sending file. Request path: '"/lib/bootstrap/dist/js/bootstrap.js"'. Physical path: '"C:\CM\Web\ASPNETCORE_NEW\Labs\LabFiles\Mod01\PhotoSharingApplication\src\PhotoSharingApplication\wwwroot\lib\bootstrap\dist\js\bootstrap.js"' (27b0a520)
+2016-12-16T10:08:56.0086257+01:00 0HL15ICJPTQ1K [INF] Request starting HTTP/1.1 GET http://localhost:3493/js/site.js?v=EWaMeWsJBYWmL2g_KkgXZQ5nPe-a3Ichp0LEgzXczKo   (e5be5b71)
+2016-12-16T10:08:56.0126341+01:00 0HL15ICJPTQ1I [INF] Request finished in 118.3002ms 200 application/javascript (15c52c40)
+2016-12-16T10:08:56.0416281+01:00 0HL15ICJPTQ1K [INF] Sending file. Request path: '"/js/site.js"'. Physical path: '"C:\CM\Web\ASPNETCORE_NEW\Labs\LabFiles\Mod01\PhotoSharingApplication\src\PhotoSharingApplication\wwwroot\js\site.js"' (27b0a520)
+2016-12-16T10:08:56.0536265+01:00 0HL15ICJPTQ1L [INF] Request starting HTTP/1.1 GET http://localhost:3493/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2   (e5be5b71)
+2016-12-16T10:08:56.0616271+01:00 0HL15ICJPTQ1L [INF] Sending file. Request path: '"/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2"'. Physical path: '"C:\CM\Web\ASPNETCORE_NEW\Labs\LabFiles\Mod01\PhotoSharingApplication\src\PhotoSharingApplication\wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.woff2"' (27b0a520)
+2016-12-16T10:08:56.0676287+01:00 0HL15ICJPTQ1K [INF] Request finished in 78.0403ms 200 application/javascript (15c52c40)
+2016-12-16T10:08:56.0696277+01:00 0HL15ICJPTQ1J [INF] Request finished in 70.0401ms 200 application/javascript (15c52c40)
+2016-12-16T10:08:56.0736274+01:00 0HL15ICJPTQ1L [INF] Request finished in 50.538ms 200 application/font-woff2 (15c52c40)
+2016-12-16T10:08:56.1496469+01:00 0HL15ICJPTQ1H [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:08:56.1496469+01:00 0HL15ICJPTQ1D [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:08:56.1496469+01:00 0HL15ICJPTQ1F [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:08:56.1726487+01:00 0HL15ICJPTQ1D [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:08:56.1941508+01:00 0HL15ICJPTQ1H [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:08:56.2156544+01:00 0HL15ICJPTQ1D [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:08:56.2376885+01:00 0HL15ICJPTQ1H [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:08:56.2606560+01:00 0HL15ICJPTQ1F [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:08:56.2626534+01:00 0HL15ICJPTQ1H [INF] >> Key: id; Value 1 (12676a39)
+2016-12-16T10:08:56.2856606+01:00 0HL15ICJPTQ1F [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:08:56.2881605+01:00 0HL15ICJPTQ1D [INF] >> Key: id; Value 2 (04a4ceb4)
+2016-12-16T10:08:56.3106681+01:00 0HL15ICJPTQ1F [INF] >> Key: id; Value 3 (45f9515c)
+2016-12-16T10:08:56.3126663+01:00 0HL15ICJPTQ1H [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["1"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:08:56.3136680+01:00 0HL15ICJPTQ1F [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["3"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:08:56.3166687+01:00 0HL15ICJPTQ1D [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["2"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:08:56.3616684+01:00 0HL15ICJPTQ1D [INF] Executed DbCommand (5ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:08:56.4537109+01:00 0HL15ICJPTQ1F [INF] Executed DbCommand (0ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:08:56.4826763+01:00 0HL15ICJPTQ1H [INF] Executed DbCommand (4ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:08:56.6706927+01:00 0HL15ICJPTQ1F [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:08:56.6716936+01:00 0HL15ICJPTQ1H [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:08:56.7297044+01:00 0HL15ICJPTQ1H [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 776.7549ms (afa2e885)
+2016-12-16T10:08:56.7587072+01:00 0HL15ICJPTQ1F [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 779.4036ms (afa2e885)
+2016-12-16T10:08:56.7817052+01:00 0HL15ICJPTQ1H [INF] Request finished in 897.1454ms 200 image/jpeg (15c52c40)
+2016-12-16T10:08:56.7827054+01:00 0HL15ICJPTQ1F [INF] Request finished in 898.9268ms 200 image/jpeg (15c52c40)
+2016-12-16T10:08:56.7877114+01:00 0HL15ICJPTQ1D [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:08:56.7932116+01:00 0HL15ICJPTQ1D [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 901.4691ms (afa2e885)
+2016-12-16T10:08:56.7957116+01:00 0HL15ICJPTQ1D [INF] Request finished in 959.8593ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:03.0901775+01:00 0HL15ICJPTQ1M [INF] Request starting HTTP/1.1 GET http://localhost:3493/favicon.ico   (e5be5b71)
+2016-12-16T10:09:03.0941780+01:00 0HL15ICJPTQ1M [INF] Sending file. Request path: '"/favicon.ico"'. Physical path: '"C:\CM\Web\ASPNETCORE_NEW\Labs\LabFiles\Mod01\PhotoSharingApplication\src\PhotoSharingApplication\wwwroot\favicon.ico"' (27b0a520)
+2016-12-16T10:09:03.0981796+01:00 0HL15ICJPTQ1M [INF] Request finished in 8.6722ms 200 image/x-icon (15c52c40)
+2016-12-16T10:09:03.2484553+01:00 0HL15ICJPTQ1N [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos   (e5be5b71)
+2016-12-16T10:09:03.2534544+01:00 0HL15ICJPTQ1N [INF] Controller: Photos; Action: Index (c3c50c94)
+2016-12-16T10:09:03.2564558+01:00 0HL15ICJPTQ1N [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:03.2594580+01:00 0HL15ICJPTQ1N [INF] >> Key: action; Value Index (53163afb)
+2016-12-16T10:09:03.2614561+01:00 0HL15ICJPTQ1N [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.Index (PhotoSharingApplication)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:03.3544702+01:00 0HL15ICJPTQ1N [INF] Executing ViewResult, running view at path "/Views/Photos/Index.cshtml". (9707eebe)
+2016-12-16T10:09:03.3834680+01:00 0HL15ICJPTQ1N [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title], [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [Photos] AS [p]
+LEFT JOIN [AspNetUsers] AS [a] ON [p].[ApplicationUserId] = [a].[Id] (6438bdd5)
+2016-12-16T10:09:04.8828554+01:00 0HL15ICJPTQ1N [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.Index (PhotoSharingApplication)" in 1631.1642ms (afa2e885)
+2016-12-16T10:09:04.8868558+01:00 0HL15ICJPTQ1N [INF] Request finished in 1639.3347ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-16T10:09:04.9118698+01:00 0HL15ICJPTQ1O [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/1   (e5be5b71)
+2016-12-16T10:09:04.9158680+01:00 0HL15ICJPTQ1P [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/3   (e5be5b71)
+2016-12-16T10:09:04.9198708+01:00 0HL15ICJPTQ1Q [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/4   (e5be5b71)
+2016-12-16T10:09:04.9418701+01:00 0HL15ICJPTQ1R [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/6   (e5be5b71)
+2016-12-16T10:09:04.9448681+01:00 0HL15ICJPTQ1Q [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:04.9668701+01:00 0HL15ICJPTQ1Q [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:04.9898739+01:00 0HL15ICJPTQ1R [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:05.0128788+01:00 0HL15ICJPTQ1S [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/2   (e5be5b71)
+2016-12-16T10:09:05.0148784+01:00 0HL15ICJPTQ1R [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:05.0438793+01:00 0HL15ICJPTQ1Q [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:05.0658779+01:00 0HL15ICJPTQ1S [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:05.0878931+01:00 0HL15ICJPTQ1Q [INF] >> Key: id; Value 4 (f83f35e9)
+2016-12-16T10:09:05.1013837+01:00 0HL15ICJPTQ1S [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:05.1248885+01:00 0HL15ICJPTQ1T [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/5   (e5be5b71)
+2016-12-16T10:09:05.1258883+01:00 0HL15ICJPTQ1O [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:05.1478892+01:00 0HL15ICJPTQ1O [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:05.1498885+01:00 0HL15ICJPTQ1P [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:05.1738898+01:00 0HL15ICJPTQ1O [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:05.1748882+01:00 0HL15ICJPTQ1P [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:05.1983956+01:00 0HL15ICJPTQ1O [INF] >> Key: id; Value 1 (12676a39)
+2016-12-16T10:09:05.2003937+01:00 0HL15ICJPTQ1P [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:05.2248987+01:00 0HL15ICJPTQ1O [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["1"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:05.2248987+01:00 0HL15ICJPTQ1P [INF] >> Key: id; Value 3 (45f9515c)
+2016-12-16T10:09:05.2489038+01:00 0HL15ICJPTQ1P [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["3"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:05.2699003+01:00 0HL15ICJPTQ1S [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:05.2929048+01:00 0HL15ICJPTQ1R [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:05.3179075+01:00 0HL15ICJPTQ1O [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:05.3189047+01:00 0HL15ICJPTQ1P [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:05.3264053+01:00 0HL15ICJPTQ1S [INF] >> Key: id; Value 2 (04a4ceb4)
+2016-12-16T10:09:05.3464043+01:00 0HL15ICJPTQ1S [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["2"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:05.3564041+01:00 0HL15ICJPTQ1Q [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["4"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:05.3569158+01:00 0HL15ICJPTQ1T [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:05.3594063+01:00 0HL15ICJPTQ1T [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:05.3629049+01:00 0HL15ICJPTQ1T [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:05.3859049+01:00 0HL15ICJPTQ1R [INF] >> Key: id; Value 6 (c96b5842)
+2016-12-16T10:09:05.4109045+01:00 0HL15ICJPTQ1Q [INF] Executed DbCommand (5ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:09:05.4319052+01:00 0HL15ICJPTQ1O [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 410.7491ms (afa2e885)
+2016-12-16T10:09:05.4849051+01:00 0HL15ICJPTQ1U [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/7   (e5be5b71)
+2016-12-16T10:09:05.5074074+01:00 0HL15ICJPTQ1P [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 410.8378ms (afa2e885)
+2016-12-16T10:09:05.5239051+01:00 0HL15ICJPTQ1S [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:05.5344052+01:00 0HL15ICJPTQ1T [INF] >> Key: id; Value 5 (d03065cc)
+2016-12-16T10:09:05.5694055+01:00 0HL15ICJPTQ1R [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["6"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:05.5784055+01:00 0HL15ICJPTQ1T [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["5"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:05.5884057+01:00 0HL15ICJPTQ1O [INF] Request finished in 538.6085ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:05.6179110+01:00 0HL15ICJPTQ1U [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:05.6469107+01:00 0HL15ICJPTQ1V [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/8   (e5be5b71)
+2016-12-16T10:09:05.6549079+01:00 0HL15ICJPTQ1S [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 601.9821ms (afa2e885)
+2016-12-16T10:09:05.6689112+01:00 0HL15ICJPTQ1S [INF] Request finished in 755.1093ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:05.6979091+01:00 0HL15ICJPTQ1V [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:05.7289172+01:00 0HL15ICJPTQ20 [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/10   (e5be5b71)
+2016-12-16T10:09:05.7509199+01:00 0HL15ICJPTQ1P [INF] Request finished in 610.2655ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:05.7739195+01:00 0HL15ICJPTQ1R [INF] Executed DbCommand (7ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:09:05.7759169+01:00 0HL15ICJPTQ21 [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/9   (e5be5b71)
+2016-12-16T10:09:05.7789172+01:00 0HL15ICJPTQ20 [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:05.7809168+01:00 0HL15ICJPTQ20 [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:05.8169226+01:00 0HL15ICJPTQ21 [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:05.8419237+01:00 0HL15ICJPTQ1T [INF] Executed DbCommand (37ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:09:05.8449228+01:00 0HL15ICJPTQ20 [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:05.8679221+01:00 0HL15ICJPTQ1V [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:05.8969225+01:00 0HL15ICJPTQ1U [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:05.9199285+01:00 0HL15ICJPTQ1V [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:05.9369302+01:00 0HL15ICJPTQ1U [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:05.9679289+01:00 0HL15ICJPTQ1V [INF] >> Key: id; Value 8 (a117879b)
+2016-12-16T10:09:05.9899301+01:00 0HL15ICJPTQ21 [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:06.0134330+01:00 0HL15ICJPTQ1V [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["8"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:06.0199210+01:00 0HL15ICJPTQ1U [INF] >> Key: id; Value 7 (aed52316)
+2016-12-16T10:09:06.0789195+01:00 0HL15ICJPTQ20 [INF] >> Key: id; Value 10 (df16b82e)
+2016-12-16T10:09:06.1039233+01:00 0HL15ICJPTQ1U [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["7"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:06.1054250+01:00 0HL15ICJPTQ20 [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["10"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:06.1419276+01:00 0HL15ICJPTQ21 [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:06.1759284+01:00 0HL15ICJPTQ1Q [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:06.1809287+01:00 0HL15ICJPTQ21 [INF] >> Key: id; Value 9 (c4f8cf65)
+2016-12-16T10:09:06.1939296+01:00 0HL15ICJPTQ21 [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["9"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:06.1979278+01:00 0HL15ICJPTQ20 [INF] Executed DbCommand (76ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:09:06.2004323+01:00 0HL15ICJPTQ1Q [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1253.1479ms (afa2e885)
+2016-12-16T10:09:06.2389376+01:00 0HL15ICJPTQ1Q [INF] Request finished in 1302.4676ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:06.2649438+01:00 0HL15ICJPTQ22 [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/11   (e5be5b71)
+2016-12-16T10:09:06.2839388+01:00 0HL15ICJPTQ23 [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/13   (e5be5b71)
+2016-12-16T10:09:06.3094414+01:00 0HL15ICJPTQ1R [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:06.3114410+01:00 0HL15ICJPTQ22 [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:06.3356047+01:00 0HL15ICJPTQ22 [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:06.3586039+01:00 0HL15ICJPTQ1V [INF] Executed DbCommand (128ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:09:06.3596045+01:00 0HL15ICJPTQ22 [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:06.3836036+01:00 0HL15ICJPTQ22 [INF] >> Key: id; Value 11 (b96eecdf)
+2016-12-16T10:09:06.3896018+01:00 0HL15ICJPTQ23 [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:06.3966052+01:00 0HL15ICJPTQ23 [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:06.4401104+01:00 0HL15ICJPTQ1R [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1415.7165ms (afa2e885)
+2016-12-16T10:09:06.4631093+01:00 0HL15ICJPTQ22 [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["11"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:06.4881096+01:00 0HL15ICJPTQ23 [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:06.5161182+01:00 0HL15ICJPTQ24 [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/12   (e5be5b71)
+2016-12-16T10:09:06.5211178+01:00 0HL15ICJPTQ1U [INF] Executed DbCommand (127ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:09:06.5261200+01:00 0HL15ICJPTQ24 [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:06.5321178+01:00 0HL15ICJPTQ24 [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:06.5661175+01:00 0HL15ICJPTQ24 [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:06.5921290+01:00 0HL15ICJPTQ24 [INF] >> Key: id; Value 12 (ab9fd141)
+2016-12-16T10:09:06.6121208+01:00 0HL15ICJPTQ21 [INF] Executed DbCommand (166ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:09:06.6141209+01:00 0HL15ICJPTQ23 [INF] >> Key: id; Value 13 (95cf25a0)
+2016-12-16T10:09:06.6581253+01:00 0HL15ICJPTQ24 [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["12"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:06.6741268+01:00 0HL15ICJPTQ22 [INF] Executed DbCommand (28ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:09:06.6821251+01:00 0HL15ICJPTQ23 [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["13"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:06.7571349+01:00 0HL15ICJPTQ24 [INF] Executed DbCommand (2ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:09:06.7791343+01:00 0HL15ICJPTQ1R [INF] Request finished in 1543.5741ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:06.7941329+01:00 0HL15ICJPTQ23 [INF] Executed DbCommand (15ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:09:06.9531458+01:00 0HL15ICJPTQ20 [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:06.9796479+01:00 0HL15ICJPTQ20 [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1206.2622ms (afa2e885)
+2016-12-16T10:09:06.9861460+01:00 0HL15ICJPTQ20 [INF] Request finished in 1310.5451ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:07.0071452+01:00 0HL15ICJPTQ1T [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:07.0986448+01:00 0HL15ICJPTQ1T [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1944.0402ms (afa2e885)
+2016-12-16T10:09:07.1326474+01:00 0HL15ICJPTQ1T [INF] Request finished in 2202.665ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:07.1576452+01:00 0HL15ICJPTQ21 [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:07.2071498+01:00 0HL15ICJPTQ21 [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1418.4336ms (afa2e885)
+2016-12-16T10:09:07.2346468+01:00 0HL15ICJPTQ21 [INF] Request finished in 1455.7156ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:07.2681491+01:00 0HL15ICJPTQ23 [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:07.2741512+01:00 0HL15ICJPTQ23 [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 911.5339ms (afa2e885)
+2016-12-16T10:09:07.3121494+01:00 0HL15ICJPTQ23 [INF] Request finished in 1036.1178ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:07.4021586+01:00 0HL15ICJPTQ1U [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:07.4111609+01:00 0HL15ICJPTQ1U [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1900.6898ms (afa2e885)
+2016-12-16T10:09:07.4151610+01:00 0HL15ICJPTQ1U [INF] Request finished in 1980.2415ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:07.4911733+01:00 0HL15ICJPTQ1V [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:07.5286735+01:00 0HL15ICJPTQ1V [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1873.5643ms (afa2e885)
+2016-12-16T10:09:07.5361738+01:00 0HL15ICJPTQ1V [INF] Request finished in 1941.0777ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:07.5696732+01:00 0HL15ICJPTQ22 [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:07.5861742+01:00 0HL15ICJPTQ22 [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1301.3514ms (afa2e885)
+2016-12-16T10:09:07.5906738+01:00 0HL15ICJPTQ22 [INF] Request finished in 1402.7855ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:07.6121737+01:00 0HL15ICJPTQ24 [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:07.6296734+01:00 0HL15ICJPTQ24 [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1108.3815ms (afa2e885)
+2016-12-16T10:09:07.6336739+01:00 0HL15ICJPTQ24 [INF] Request finished in 1448.4316ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:15.3968351+01:00 0HL15ICJPTQ25 [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/SlideShow   (e5be5b71)
+2016-12-16T10:09:15.4038385+01:00 0HL15ICJPTQ25 [INF] Controller: Photos; Action: SlideShow (ed53dfeb)
+2016-12-16T10:09:15.4088346+01:00 0HL15ICJPTQ25 [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:15.4128332+01:00 0HL15ICJPTQ25 [INF] >> Key: action; Value SlideShow (3d340f84)
+2016-12-16T10:09:15.4148661+01:00 0HL15ICJPTQ25 [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.SlideShow (PhotoSharingApplication)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:15.4299161+01:00 0HL15ICJPTQ25 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title]
+FROM [Photos] AS [p] (6438bdd5)
+2016-12-16T10:09:16.7857182+01:00 0HL15ICJPTQ25 [INF] Executing ViewResult, running view at path "/Views/Photos/SlideShow.cshtml". (9707eebe)
+2016-12-16T10:09:16.8127197+01:00 0HL15ICJPTQ25 [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.SlideShow (PhotoSharingApplication)" in 1409.9849ms (afa2e885)
+2016-12-16T10:09:16.8182237+01:00 0HL15ICJPTQ25 [INF] Request finished in 1421.7676ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-16T10:09:16.8547290+01:00 0HL15ICJPTQ26 [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/1   (e5be5b71)
+2016-12-16T10:09:16.8627296+01:00 0HL15ICJPTQ27 [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/4   (e5be5b71)
+2016-12-16T10:09:16.8687301+01:00 0HL15ICJPTQ26 [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:16.8867309+01:00 0HL15ICJPTQ26 [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:16.9017299+01:00 0HL15ICJPTQ26 [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:16.9177314+01:00 0HL15ICJPTQ26 [INF] >> Key: id; Value 1 (12676a39)
+2016-12-16T10:09:16.9347357+01:00 0HL15ICJPTQ26 [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["1"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:16.9417353+01:00 0HL15ICJPTQ28 [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/6   (e5be5b71)
+2016-12-16T10:09:16.9457369+01:00 0HL15ICJPTQ29 [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/7   (e5be5b71)
+2016-12-16T10:09:16.9707366+01:00 0HL15ICJPTQ2A [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/5   (e5be5b71)
+2016-12-16T10:09:16.9967376+01:00 0HL15ICJPTQ28 [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:17.0267424+01:00 0HL15ICJPTQ2B [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/3   (e5be5b71)
+2016-12-16T10:09:17.0357477+01:00 0HL15ICJPTQ2C [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/2   (e5be5b71)
+2016-12-16T10:09:17.0667426+01:00 0HL15ICJPTQ2D [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/8   (e5be5b71)
+2016-12-16T10:09:17.0667426+01:00 0HL15ICJPTQ27 [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:17.0847422+01:00 0HL15ICJPTQ26 [INF] Executed DbCommand (28ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:09:17.0867426+01:00 0HL15ICJPTQ2D [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:17.1017417+01:00 0HL15ICJPTQ2D [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:17.1187457+01:00 0HL15ICJPTQ2D [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:17.1242466+01:00 0HL15ICJPTQ2D [INF] >> Key: id; Value 8 (a117879b)
+2016-12-16T10:09:17.1242466+01:00 0HL15ICJPTQ29 [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:17.1267455+01:00 0HL15ICJPTQ29 [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:17.1547503+01:00 0HL15ICJPTQ28 [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:17.1887476+01:00 0HL15ICJPTQ2A [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:17.2027476+01:00 0HL15ICJPTQ28 [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:17.2297552+01:00 0HL15ICJPTQ2C [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:17.2407685+01:00 0HL15ICJPTQ2B [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:17.2567677+01:00 0HL15ICJPTQ27 [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:17.2797680+01:00 0HL15ICJPTQ27 [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:17.2937684+01:00 0HL15ICJPTQ2D [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["8"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:17.3127664+01:00 0HL15ICJPTQ2B [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:17.3357735+01:00 0HL15ICJPTQ2B [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:17.3617748+01:00 0HL15ICJPTQ2C [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:17.3737778+01:00 0HL15ICJPTQ29 [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:17.3937786+01:00 0HL15ICJPTQ2A [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:17.4157840+01:00 0HL15ICJPTQ28 [INF] >> Key: id; Value 6 (c96b5842)
+2016-12-16T10:09:17.4367866+01:00 0HL15ICJPTQ2A [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:17.4557865+01:00 0HL15ICJPTQ27 [INF] >> Key: id; Value 4 (f83f35e9)
+2016-12-16T10:09:17.4837867+01:00 0HL15ICJPTQ2E [INF] Request starting HTTP/1.1 GET http://localhost:3493/lib/Microsoft.jQuery.Unobtrusive.Ajax/jquery.unobtrusive-ajax.js   (e5be5b71)
+2016-12-16T10:09:17.4867874+01:00 0HL15ICJPTQ2C [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:17.5168069+01:00 0HL15ICJPTQ2B [INF] >> Key: id; Value 3 (45f9515c)
+2016-12-16T10:09:17.5337984+01:00 0HL15ICJPTQ29 [INF] >> Key: id; Value 7 (aed52316)
+2016-12-16T10:09:17.5598024+01:00 0HL15ICJPTQ2E [INF] Sending file. Request path: '"/lib/Microsoft.jQuery.Unobtrusive.Ajax/jquery.unobtrusive-ajax.js"'. Physical path: '"C:\CM\Web\ASPNETCORE_NEW\Labs\LabFiles\Mod01\PhotoSharingApplication\src\PhotoSharingApplication\wwwroot\lib\Microsoft.jQuery.Unobtrusive.Ajax\jquery.unobtrusive-ajax.js"' (27b0a520)
+2016-12-16T10:09:17.5718012+01:00 0HL15ICJPTQ28 [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["6"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:17.5797969+01:00 0HL15ICJPTQ2A [INF] >> Key: id; Value 5 (d03065cc)
+2016-12-16T10:09:17.6117980+01:00 0HL15ICJPTQ2A [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["5"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:17.6173088+01:00 0HL15ICJPTQ27 [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["4"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:17.6358057+01:00 0HL15ICJPTQ26 [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:17.6558065+01:00 0HL15ICJPTQ2A [INF] Executed DbCommand (4ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:09:17.6968054+01:00 0HL15ICJPTQ29 [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["7"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:17.7148073+01:00 0HL15ICJPTQ2C [INF] >> Key: id; Value 2 (04a4ceb4)
+2016-12-16T10:09:17.7448156+01:00 0HL15ICJPTQ2B [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["3"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:17.7558156+01:00 0HL15ICJPTQ28 [INF] Executed DbCommand (8ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:09:17.7818155+01:00 0HL15ICJPTQ29 [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:17.8288186+01:00 0HL15ICJPTQ2D [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:17.8298189+01:00 0HL15ICJPTQ2E [INF] Request finished in 256.8059ms 200 application/javascript (15c52c40)
+2016-12-16T10:09:17.8528237+01:00 0HL15ICJPTQ27 [INF] Executed DbCommand (18ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:09:17.8578255+01:00 0HL15ICJPTQ26 [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 794.7995ms (afa2e885)
+2016-12-16T10:09:17.8828240+01:00 0HL15ICJPTQ2F [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/9   (e5be5b71)
+2016-12-16T10:09:17.9163309+01:00 0HL15ICJPTQ26 [INF] Request finished in 1030.883ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:17.9428337+01:00 0HL15ICJPTQ2B [INF] Executed DbCommand (9ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:09:17.9640738+01:00 0HL15ICJPTQ2F [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:18.0175483+01:00 0HL15ICJPTQ2C [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["2"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:18.0660516+01:00 0HL15ICJPTQ29 [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 829.3632ms (afa2e885)
+2016-12-16T10:09:18.0960534+01:00 0HL15ICJPTQ2G [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/10   (e5be5b71)
+2016-12-16T10:09:18.1185565+01:00 0HL15ICJPTQ29 [INF] Request finished in 1237.973ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:18.1440708+01:00 0HL15ICJPTQ2D [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 803.3343ms (afa2e885)
+2016-12-16T10:09:18.1460712+01:00 0HL15ICJPTQ2G [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:18.1730712+01:00 0HL15ICJPTQ2D [INF] Request finished in 1148.2567ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:18.1900707+01:00 0HL15ICJPTQ2G [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:18.2165840+01:00 0HL15ICJPTQ2F [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:18.2480875+01:00 0HL15ICJPTQ2C [INF] Executed DbCommand (19ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:09:18.2640890+01:00 0HL15ICJPTQ2G [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:18.2960879+01:00 0HL15ICJPTQ28 [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:18.3050890+01:00 0HL15ICJPTQ2H [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/11   (e5be5b71)
+2016-12-16T10:09:18.3530977+01:00 0HL15ICJPTQ2G [INF] >> Key: id; Value 10 (df16b82e)
+2016-12-16T10:09:18.3860956+01:00 0HL15ICJPTQ2G [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["10"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:18.3881036+01:00 0HL15ICJPTQ2I [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/12   (e5be5b71)
+2016-12-16T10:09:18.3930956+01:00 0HL15ICJPTQ2I [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:18.3960947+01:00 0HL15ICJPTQ2I [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:18.3980944+01:00 0HL15ICJPTQ2I [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:18.4010946+01:00 0HL15ICJPTQ2I [INF] >> Key: id; Value 12 (ab9fd141)
+2016-12-16T10:09:18.4155979+01:00 0HL15ICJPTQ2H [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:18.4431024+01:00 0HL15ICJPTQ27 [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:18.4621030+01:00 0HL15ICJPTQ2B [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:18.4681028+01:00 0HL15ICJPTQ2G [INF] Executed DbCommand (70ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:09:18.4931024+01:00 0HL15ICJPTQ27 [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1596.4354ms (afa2e885)
+2016-12-16T10:09:18.4961042+01:00 0HL15ICJPTQ2I [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["12"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:18.5151105+01:00 0HL15ICJPTQ2F [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:18.5481137+01:00 0HL15ICJPTQ2F [INF] >> Key: id; Value 9 (c4f8cf65)
+2016-12-16T10:09:18.5671135+01:00 0HL15ICJPTQ2F [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["9"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:18.5811150+01:00 0HL15ICJPTQ2I [INF] Executed DbCommand (12ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:09:18.5921139+01:00 0HL15ICJPTQ2B [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1430.7186ms (afa2e885)
+2016-12-16T10:09:18.6321243+01:00 0HL15ICJPTQ28 [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1413.6327ms (afa2e885)
+2016-12-16T10:09:18.6931229+01:00 0HL15ICJPTQ27 [INF] Request finished in 1655.5083ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:18.6951248+01:00 0HL15ICJPTQ28 [INF] Request finished in 1816.8747ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:18.6961235+01:00 0HL15ICJPTQ2J [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/13   (e5be5b71)
+2016-12-16T10:09:18.7236507+01:00 0HL15ICJPTQ2B [INF] Request finished in 1764.4268ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:18.7301488+01:00 0HL15ICJPTQ2F [INF] Executed DbCommand (13ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:09:18.7401536+01:00 0HL15ICJPTQ2H [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:18.7711534+01:00 0HL15ICJPTQ2A [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:18.7831536+01:00 0HL15ICJPTQ2H [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:18.8131539+01:00 0HL15ICJPTQ2C [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:18.8131539+01:00 0HL15ICJPTQ2H [INF] >> Key: id; Value 11 (b96eecdf)
+2016-12-16T10:09:18.8421665+01:00 0HL15ICJPTQ2A [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1815.2696ms (afa2e885)
+2016-12-16T10:09:18.8661705+01:00 0HL15ICJPTQ2H [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["11"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:18.8701694+01:00 0HL15ICJPTQ2A [INF] Request finished in 2010.0489ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:18.8971676+01:00 0HL15ICJPTQ2C [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1812.9698ms (afa2e885)
+2016-12-16T10:09:18.9591762+01:00 0HL15ICJPTQ2J [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:09:18.9831798+01:00 0HL15ICJPTQ2C [INF] Request finished in 2064.6006ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:19.0091781+01:00 0HL15ICJPTQ2H [INF] Executed DbCommand (6ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:09:19.0176801+01:00 0HL15ICJPTQ2G [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:19.0341841+01:00 0HL15ICJPTQ2J [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:09:19.0421855+01:00 0HL15ICJPTQ2G [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 914.533ms (afa2e885)
+2016-12-16T10:09:19.0521834+01:00 0HL15ICJPTQ2J [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:09:19.0561854+01:00 0HL15ICJPTQ2G [INF] Request finished in 1104.6238ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:19.1041858+01:00 0HL15ICJPTQ2J [INF] >> Key: id; Value 13 (95cf25a0)
+2016-12-16T10:09:19.1071868+01:00 0HL15ICJPTQ2J [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["13"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:09:19.1532112+01:00 0HL15ICJPTQ2F [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:19.1552071+01:00 0HL15ICJPTQ2J [INF] Executed DbCommand (6ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:09:19.1902059+01:00 0HL15ICJPTQ2F [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1238.32ms (afa2e885)
+2016-12-16T10:09:19.1932103+01:00 0HL15ICJPTQ2F [INF] Request finished in 1360.0264ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:19.3197252+01:00 0HL15ICJPTQ2J [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:19.3257193+01:00 0HL15ICJPTQ2J [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 582.6073ms (afa2e885)
+2016-12-16T10:09:19.3297182+01:00 0HL15ICJPTQ2J [INF] Request finished in 632.3445ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:19.3372260+01:00 0HL15ICJPTQ2I [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:19.3702255+01:00 0HL15ICJPTQ2I [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 978.6028ms (afa2e885)
+2016-12-16T10:09:19.3732261+01:00 0HL15ICJPTQ2I [INF] Request finished in 1195.9123ms 200 image/jpeg (15c52c40)
+2016-12-16T10:09:19.4352442+01:00 0HL15ICJPTQ2H [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:09:19.4412451+01:00 0HL15ICJPTQ2H [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1112.8974ms (afa2e885)
+2016-12-16T10:09:19.4432451+01:00 0HL15ICJPTQ2H [INF] Request finished in 1322.8075ms 200 image/jpeg (15c52c40)
+2016-12-16T10:10:28.9351805+01:00 0HL15ICJPTQ2K [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/Search   (e5be5b71)
+2016-12-16T10:10:28.9401631+01:00 0HL15ICJPTQ2K [INF] Controller: Photos; Action: Search (d7e3abe6)
+2016-12-16T10:10:28.9630943+01:00 0HL15ICJPTQ2K [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:10:28.9660912+01:00 0HL15ICJPTQ2K [INF] >> Key: action; Value Search (207fdd6a)
+2016-12-16T10:10:28.9886230+01:00 0HL15ICJPTQ2K [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.Search (PhotoSharingApplication)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:10:29.1476548+01:00 0HL15ICJPTQ2K [INF] Executing ViewResult, running view at path "/Views/Photos/Search.cshtml". (9707eebe)
+2016-12-16T10:10:29.1641622+01:00 0HL15ICJPTQ2K [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.Search (PhotoSharingApplication)" in 224.4801ms (afa2e885)
+2016-12-16T10:10:29.1686634+01:00 0HL15ICJPTQ2K [INF] Request finished in 232.8443ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-16T10:10:29.1993192+01:00 0HL15ICJPTQ2L [INF] Request starting HTTP/1.1 GET http://localhost:3493/lib/handlebars/handlebars.js   (e5be5b71)
+2016-12-16T10:10:29.2243165+01:00 0HL15ICJPTQ2M [INF] Request starting HTTP/1.1 GET http://localhost:3493/css/search.css   (e5be5b71)
+2016-12-16T10:10:29.2253235+01:00 0HL15ICJPTQ2N [INF] Request starting HTTP/1.1 GET http://localhost:3493/lib/typeahead.js/dist/typeahead.bundle.js   (e5be5b71)
+2016-12-16T10:10:29.2483171+01:00 0HL15ICJPTQ2M [INF] Sending file. Request path: '"/css/search.css"'. Physical path: '"C:\CM\Web\ASPNETCORE_NEW\Labs\LabFiles\Mod01\PhotoSharingApplication\src\PhotoSharingApplication\wwwroot\css\search.css"' (27b0a520)
+2016-12-16T10:10:29.2713189+01:00 0HL15ICJPTQ2L [INF] Sending file. Request path: '"/lib/handlebars/handlebars.js"'. Physical path: '"C:\CM\Web\ASPNETCORE_NEW\Labs\LabFiles\Mod01\PhotoSharingApplication\src\PhotoSharingApplication\wwwroot\lib\handlebars\handlebars.js"' (27b0a520)
+2016-12-16T10:10:29.2930608+01:00 0HL15ICJPTQ2N [INF] Sending file. Request path: '"/lib/typeahead.js/dist/typeahead.bundle.js"'. Physical path: '"C:\CM\Web\ASPNETCORE_NEW\Labs\LabFiles\Mod01\PhotoSharingApplication\src\PhotoSharingApplication\wwwroot\lib\typeahead.js\dist\typeahead.bundle.js"' (27b0a520)
+2016-12-16T10:10:29.3200624+01:00 0HL15ICJPTQ2L [INF] Request finished in 127.6619ms 200 application/javascript (15c52c40)
+2016-12-16T10:10:29.3810666+01:00 0HL15ICJPTQ2M [INF] Request finished in 126.1675ms 200 text/css (15c52c40)
+2016-12-16T10:10:29.3820664+01:00 0HL15ICJPTQ2N [INF] Request finished in 140.0572ms 200 application/javascript (15c52c40)
+2016-12-16T10:10:32.6670120+01:00 0HL15ICJPTQ2O [INF] Request starting HTTP/1.1 GET http://localhost:3493/api/search/titles/e   (e5be5b71)
+2016-12-16T10:10:32.6750118+01:00 0HL15ICJPTQ2O [INF] Executing action method "PhotoSharingApplication.Controllers.SearchController.Titles (PhotoSharingApplication)" with arguments (["e"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:10:32.7340262+01:00 0HL15ICJPTQ2O [INF] Executed DbCommand (4ms) [Parameters=[@__ToLower_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT [p].[Title]
+FROM [Photos] AS [p]
+WHERE (CHARINDEX(@__ToLower_0, LOWER([p].[Title])) > 0) OR (@__ToLower_0 = N'') (6438bdd5)
+2016-12-16T10:10:32.7600317+01:00 0HL15ICJPTQ2O [INF] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext". (4e968210)
+2016-12-16T10:10:32.8720328+01:00 0HL15ICJPTQ2O [INF] Executed action "PhotoSharingApplication.Controllers.SearchController.Titles (PhotoSharingApplication)" in 198.7336ms (afa2e885)
+2016-12-16T10:10:32.8745361+01:00 0HL15ICJPTQ2O [INF] Request finished in 208.5972ms 200 application/json; charset=utf-8 (15c52c40)
+2016-12-16T10:10:33.2210784+01:00 0HL15ICJPTQ2P [INF] Request starting HTTP/1.1 GET http://localhost:3493/api/search/titles/en   (e5be5b71)
+2016-12-16T10:10:33.2240786+01:00 0HL15ICJPTQ2P [INF] Executing action method "PhotoSharingApplication.Controllers.SearchController.Titles (PhotoSharingApplication)" with arguments (["en"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:10:33.2300773+01:00 0HL15ICJPTQ2P [INF] Executed DbCommand (2ms) [Parameters=[@__ToLower_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT [p].[Title]
+FROM [Photos] AS [p]
+WHERE (CHARINDEX(@__ToLower_0, LOWER([p].[Title])) > 0) OR (@__ToLower_0 = N'') (6438bdd5)
+2016-12-16T10:10:33.2330783+01:00 0HL15ICJPTQ2P [INF] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext". (4e968210)
+2016-12-16T10:10:33.2360763+01:00 0HL15ICJPTQ2P [INF] Executed action "PhotoSharingApplication.Controllers.SearchController.Titles (PhotoSharingApplication)" in 11.6714ms (afa2e885)
+2016-12-16T10:10:33.2390765+01:00 0HL15ICJPTQ2P [INF] Request finished in 17.269ms 200 application/json; charset=utf-8 (15c52c40)
+2016-12-16T10:10:34.8061121+01:00 0HL15ICJPTQ2Q [INF] Request starting HTTP/1.1 GET http://localhost:3493/api/Search/photos/en   (e5be5b71)
+2016-12-16T10:10:34.8111127+01:00 0HL15ICJPTQ2Q [INF] Executing action method "PhotoSharingApplication.Controllers.SearchController.Photos (PhotoSharingApplication)" with arguments (["en"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:10:34.8981153+01:00 0HL15ICJPTQ2Q [WRN] The Include operation for navigation: 'p.Owner' was ignored because the target navigation is not reachable in the final query results. To configure this warning use the DbContextOptionsBuilder.ConfigureWarnings API (event id 'CoreEventId.IncludeIgnoredWarning'). ConfigureWarnings can be used when overriding the DbContext.OnConfiguring method or using AddDbContext on the application service provider. (3b5ca34b)
+2016-12-16T10:10:34.9141213+01:00 0HL15ICJPTQ2Q [INF] Executed DbCommand (5ms) [Parameters=[@__ToLower_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title], [p.Owner].[Id], [p.Owner].[AccessFailedCount], [p.Owner].[ConcurrencyStamp], [p.Owner].[Email], [p.Owner].[EmailConfirmed], [p.Owner].[LockoutEnabled], [p.Owner].[LockoutEnd], [p.Owner].[NormalizedEmail], [p.Owner].[NormalizedUserName], [p.Owner].[PasswordHash], [p.Owner].[PhoneNumber], [p.Owner].[PhoneNumberConfirmed], [p.Owner].[SecurityStamp], [p.Owner].[TwoFactorEnabled], [p.Owner].[UserName]
+FROM [Photos] AS [p]
+LEFT JOIN [AspNetUsers] AS [p.Owner] ON [p].[ApplicationUserId] = [p.Owner].[Id]
+WHERE (CHARINDEX(@__ToLower_0, LOWER([p].[Title])) > 0) OR (@__ToLower_0 = N'')
+ORDER BY [p].[ApplicationUserId] (6438bdd5)
+2016-12-16T10:10:34.9751214+01:00 0HL15ICJPTQ2Q [INF] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext". (4e968210)
+2016-12-16T10:10:35.1521461+01:00 0HL15ICJPTQ2Q [INF] Executed action "PhotoSharingApplication.Controllers.SearchController.Photos (PhotoSharingApplication)" in 342.8596ms (afa2e885)
+2016-12-16T10:10:35.1551463+01:00 0HL15ICJPTQ2Q [INF] Request finished in 350.6272ms 200 application/json; charset=utf-8 (15c52c40)
+2016-12-16T10:10:39.6104746+01:00 0HL15ICJPTQ2R [INF] Request starting HTTP/1.1 GET http://localhost:3493/photos/2   (e5be5b71)
+2016-12-16T10:10:39.6194617+01:00 0HL15ICJPTQ2R [INF] Controller: Photos; Action: Details (d807520f)
+2016-12-16T10:10:39.6239908+01:00 0HL15ICJPTQ2R [INF] >> Key: id; Value 2 (04a4ceb4)
+2016-12-16T10:10:39.6279709+01:00 0HL15ICJPTQ2R [INF] >> Key: action; Value Details (74a6d4ed)
+2016-12-16T10:10:39.6314639+01:00 0HL15ICJPTQ2R [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:10:39.6344672+01:00 0HL15ICJPTQ2R [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.Details (PhotoSharingApplication)" with arguments (["2"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:10:39.6649621+01:00 0HL15ICJPTQ2R [INF] Executed DbCommand (5ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(2) [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title], [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [Photos] AS [p]
+LEFT JOIN [AspNetUsers] AS [a] ON [p].[ApplicationUserId] = [a].[Id]
+WHERE [p].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:10:39.9435402+01:00 0HL15ICJPTQ2R [INF] Executing ViewResult, running view at path "/Views/Photos/Details.cshtml". (9707eebe)
+2016-12-16T10:10:39.9951151+01:00 0HL15ICJPTQ2R [INF] Executed DbCommand (12ms) [Parameters=[@__photoId_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[ApplicationUserId], [c].[Body], [c].[PhotoId], [c].[Subject], [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [Comments] AS [c]
+LEFT JOIN [AspNetUsers] AS [a] ON [c].[ApplicationUserId] = [a].[Id]
+WHERE [c].[PhotoId] = @__photoId_0 (6438bdd5)
+2016-12-16T10:10:40.1365807+01:00 0HL15ICJPTQ2R [INF] Authorization failed for user: null. (a4ab1676)
+2016-12-16T10:10:40.1405819+01:00 0HL15ICJPTQ2R [INF] Authorization failed for user: null. (a4ab1676)
+2016-12-16T10:10:40.1545792+01:00 0HL15ICJPTQ2R [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.Details (PhotoSharingApplication)" in 537.9281ms (afa2e885)
+2016-12-16T10:10:40.1595833+01:00 0HL15ICJPTQ2R [INF] Request finished in 550.2199ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-16T10:10:40.1695816+01:00 0HL15ICJPTQ2S [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/2   (e5be5b71)
+2016-12-16T10:10:40.1725800+01:00 0HL15ICJPTQ2S [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:10:40.1755814+01:00 0HL15ICJPTQ2S [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:10:40.1775826+01:00 0HL15ICJPTQ2S [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:10:40.1805892+01:00 0HL15ICJPTQ2S [INF] >> Key: id; Value 2 (04a4ceb4)
+2016-12-16T10:10:40.1835899+01:00 0HL15ICJPTQ2S [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["2"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:10:40.1915893+01:00 0HL15ICJPTQ2S [INF] Executed DbCommand (4ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:10:40.3646154+01:00 0HL15ICJPTQ2S [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:10:40.3716123+01:00 0HL15ICJPTQ2S [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 197.4102ms (afa2e885)
+2016-12-16T10:10:40.3746171+01:00 0HL15ICJPTQ2S [INF] Request finished in 204.9048ms 200 image/jpeg (15c52c40)
+2016-12-16T10:10:50.3766051+01:00 0HL15ICJPTQ2T [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/AddFavorite/2?X-Requested-With=XMLHttpRequest&_=1481879440271   (e5be5b71)
+2016-12-16T10:10:50.3845966+01:00 0HL15ICJPTQ2T [INF] Controller: Photos; Action: AddFavorite (1bdc778a)
+2016-12-16T10:10:50.3875957+01:00 0HL15ICJPTQ2T [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:10:50.3895961+01:00 0HL15ICJPTQ2T [INF] >> Key: action; Value AddFavorite (4a513c2b)
+2016-12-16T10:10:50.3925964+01:00 0HL15ICJPTQ2T [INF] >> Key: id; Value 2 (04a4ceb4)
+2016-12-16T10:10:50.3945972+01:00 0HL15ICJPTQ2T [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.AddFavorite (PhotoSharingApplication)" with arguments (["2"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:10:50.4105957+01:00 0HL15ICJPTQ2T [INF] Executing ContentResult with HTTP Response ContentType of "text/plain; charset=utf-16" (7ec2a4e9)
+2016-12-16T10:10:50.4215991+01:00 0HL15ICJPTQ2T [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.AddFavorite (PhotoSharingApplication)" in 39.4092ms (afa2e885)
+2016-12-16T10:10:50.4265994+01:00 0HL15ICJPTQ2T [INF] Session started; Key:"d8728de9-77b6-db50-cb73-ab8f9fa95daf", Id:"90963eea-c378-e1f0-4af9-29f4da65b533" (1d7cf8c0)
+2016-12-16T10:10:50.4346060+01:00 0HL15ICJPTQ2T [INF] Request finished in 57.5584ms 200 text/plain; charset=utf-16 (15c52c40)
+2016-12-16T10:10:53.6219473+01:00 0HL15ICJPTQ2U [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/SlideShow   (e5be5b71)
+2016-12-16T10:10:53.6339476+01:00 0HL15ICJPTQ2U [INF] Controller: Photos; Action: SlideShow (ed53dfeb)
+2016-12-16T10:10:53.6369471+01:00 0HL15ICJPTQ2U [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:10:53.6399504+01:00 0HL15ICJPTQ2U [INF] >> Key: action; Value SlideShow (3d340f84)
+2016-12-16T10:10:53.6429476+01:00 0HL15ICJPTQ2U [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.SlideShow (PhotoSharingApplication)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:10:53.6544650+01:00 0HL15ICJPTQ2U [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title]
+FROM [Photos] AS [p] (6438bdd5)
+2016-12-16T10:10:55.2830893+01:00 0HL15ICJPTQ2U [INF] Executing ViewResult, running view at path "/Views/Photos/SlideShow.cshtml". (9707eebe)
+2016-12-16T10:10:55.3800985+01:00 0HL15ICJPTQ2U [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.SlideShow (PhotoSharingApplication)" in 1748.2082ms (afa2e885)
+2016-12-16T10:10:55.3840997+01:00 0HL15ICJPTQ2U [INF] Request finished in 1763.8658ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-16T10:10:55.4170999+01:00 0HL15ICJPTQ2V [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/1   (e5be5b71)
+2016-12-16T10:10:55.4390996+01:00 0HL15ICJPTQ30 [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/2   (e5be5b71)
+2016-12-16T10:10:55.4621117+01:00 0HL15ICJPTQ31 [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/4   (e5be5b71)
+2016-12-16T10:10:55.4871049+01:00 0HL15ICJPTQ32 [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/3   (e5be5b71)
+2016-12-16T10:10:55.4871049+01:00 0HL15ICJPTQ2V [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:10:55.5091043+01:00 0HL15ICJPTQ31 [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:10:55.5331044+01:00 0HL15ICJPTQ33 [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/5   (e5be5b71)
+2016-12-16T10:10:55.5361058+01:00 0HL15ICJPTQ32 [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:10:55.5381044+01:00 0HL15ICJPTQ33 [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:10:55.5606123+01:00 0HL15ICJPTQ2V [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:10:55.5837324+01:00 0HL15ICJPTQ34 [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/6   (e5be5b71)
+2016-12-16T10:10:55.5867323+01:00 0HL15ICJPTQ30 [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:10:55.6097315+01:00 0HL15ICJPTQ30 [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:10:55.6317320+01:00 0HL15ICJPTQ2V [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:10:55.6337332+01:00 0HL15ICJPTQ2V [INF] >> Key: id; Value 1 (12676a39)
+2016-12-16T10:10:55.6397314+01:00 0HL15ICJPTQ2V [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["1"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:10:55.6447321+01:00 0HL15ICJPTQ30 [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:10:55.6682705+01:00 0HL15ICJPTQ34 [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:10:55.6912727+01:00 0HL15ICJPTQ32 [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:10:55.6932731+01:00 0HL15ICJPTQ30 [INF] >> Key: id; Value 2 (04a4ceb4)
+2016-12-16T10:10:55.7042702+01:00 0HL15ICJPTQ30 [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["2"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:10:55.7062691+01:00 0HL15ICJPTQ30 [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:10:55.7092694+01:00 0HL15ICJPTQ32 [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:10:55.7372734+01:00 0HL15ICJPTQ31 [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:10:55.7372734+01:00 0HL15ICJPTQ32 [INF] >> Key: id; Value 3 (45f9515c)
+2016-12-16T10:10:55.7562729+01:00 0HL15ICJPTQ31 [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:10:55.7792778+01:00 0HL15ICJPTQ33 [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:10:55.7962780+01:00 0HL15ICJPTQ34 [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:10:55.8202906+01:00 0HL15ICJPTQ32 [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["3"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:10:55.8202906+01:00 0HL15ICJPTQ34 [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:10:55.8432917+01:00 0HL15ICJPTQ2V [INF] Executed DbCommand (5ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:10:55.8452800+01:00 0HL15ICJPTQ31 [INF] >> Key: id; Value 4 (f83f35e9)
+2016-12-16T10:10:55.8497861+01:00 0HL15ICJPTQ31 [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["4"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:10:55.9012896+01:00 0HL15ICJPTQ33 [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:10:55.9152896+01:00 0HL15ICJPTQ30 [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 251.3793ms (afa2e885)
+2016-12-16T10:10:55.9432898+01:00 0HL15ICJPTQ33 [INF] >> Key: id; Value 5 (d03065cc)
+2016-12-16T10:10:55.9823053+01:00 0HL15ICJPTQ35 [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/7   (e5be5b71)
+2016-12-16T10:10:55.9893022+01:00 0HL15ICJPTQ33 [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["5"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:10:55.9903017+01:00 0HL15ICJPTQ32 [INF] Executed DbCommand (17ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:10:55.9903017+01:00 0HL15ICJPTQ31 [INF] Executed DbCommand (40ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:10:56.0113020+01:00 0HL15ICJPTQ35 [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:10:56.0363039+01:00 0HL15ICJPTQ33 [INF] Executed DbCommand (19ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:10:56.0373022+01:00 0HL15ICJPTQ30 [INF] Request finished in 524.3126ms 200 image/jpeg (15c52c40)
+2016-12-16T10:10:56.0608111+01:00 0HL15ICJPTQ35 [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:10:56.0848914+01:00 0HL15ICJPTQ36 [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/8   (e5be5b71)
+2016-12-16T10:10:56.0918827+01:00 0HL15ICJPTQ35 [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:10:56.0968864+01:00 0HL15ICJPTQ35 [INF] >> Key: id; Value 7 (aed52316)
+2016-12-16T10:10:56.1248862+01:00 0HL15ICJPTQ35 [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["7"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:10:56.1288871+01:00 0HL15ICJPTQ36 [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:10:56.1558902+01:00 0HL15ICJPTQ34 [INF] >> Key: id; Value 6 (c96b5842)
+2016-12-16T10:10:56.1853932+01:00 0HL15ICJPTQ36 [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:10:56.2123952+01:00 0HL15ICJPTQ34 [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["6"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:10:56.2353974+01:00 0HL15ICJPTQ35 [INF] Executed DbCommand (33ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:10:56.2494007+01:00 0HL15ICJPTQ36 [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:10:56.2914009+01:00 0HL15ICJPTQ36 [INF] >> Key: id; Value 8 (a117879b)
+2016-12-16T10:10:56.3204029+01:00 0HL15ICJPTQ36 [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["8"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:10:56.3204029+01:00 0HL15ICJPTQ34 [INF] Executed DbCommand (38ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:10:56.3444035+01:00 0HL15ICJPTQ2V [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:10:56.4314117+01:00 0HL15ICJPTQ2V [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 931.253ms (afa2e885)
+2016-12-16T10:10:56.4654182+01:00 0HL15ICJPTQ36 [INF] Executed DbCommand (67ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:10:56.4884204+01:00 0HL15ICJPTQ37 [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/9   (e5be5b71)
+2016-12-16T10:10:56.5104201+01:00 0HL15ICJPTQ38 [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/11   (e5be5b71)
+2016-12-16T10:10:56.5254195+01:00 0HL15ICJPTQ37 [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:10:56.5519272+01:00 0HL15ICJPTQ37 [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:10:56.5744314+01:00 0HL15ICJPTQ38 [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:10:56.5984324+01:00 0HL15ICJPTQ31 [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:10:56.6264296+01:00 0HL15ICJPTQ38 [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:10:56.6559315+01:00 0HL15ICJPTQ38 [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:10:56.6684381+01:00 0HL15ICJPTQ31 [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1168.0359ms (afa2e885)
+2016-12-16T10:10:56.7124373+01:00 0HL15ICJPTQ38 [INF] >> Key: id; Value 11 (b96eecdf)
+2016-12-16T10:10:56.7374392+01:00 0HL15ICJPTQ32 [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:10:56.7674478+01:00 0HL15ICJPTQ37 [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:10:56.7904462+01:00 0HL15ICJPTQ2V [INF] Request finished in 1044.6746ms 200 image/jpeg (15c52c40)
+2016-12-16T10:10:56.8194969+01:00 0HL15ICJPTQ31 [INF] Request finished in 1253.0905ms 200 image/jpeg (15c52c40)
+2016-12-16T10:10:56.8614990+01:00 0HL15ICJPTQ37 [INF] >> Key: id; Value 9 (c4f8cf65)
+2016-12-16T10:10:56.8825027+01:00 0HL15ICJPTQ38 [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["11"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:10:56.9165054+01:00 0HL15ICJPTQ37 [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["9"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:10:56.9275036+01:00 0HL15ICJPTQ39 [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/12   (e5be5b71)
+2016-12-16T10:10:56.9385017+01:00 0HL15ICJPTQ38 [INF] Executed DbCommand (40ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:10:56.9460096+01:00 0HL15ICJPTQ39 [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:10:56.9500097+01:00 0HL15ICJPTQ39 [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:10:56.9715140+01:00 0HL15ICJPTQ39 [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:10:56.9985156+01:00 0HL15ICJPTQ3A [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/10   (e5be5b71)
+2016-12-16T10:10:57.0195132+01:00 0HL15ICJPTQ39 [INF] >> Key: id; Value 12 (ab9fd141)
+2016-12-16T10:10:57.0470200+01:00 0HL15ICJPTQ39 [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["12"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:10:57.0745249+01:00 0HL15ICJPTQ34 [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:10:57.1105208+01:00 0HL15ICJPTQ32 [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1231.4329ms (afa2e885)
+2016-12-16T10:10:57.1590407+01:00 0HL15ICJPTQ3A [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:10:57.1795437+01:00 0HL15ICJPTQ39 [INF] Executed DbCommand (41ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:10:57.2065438+01:00 0HL15ICJPTQ3A [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:10:57.2195431+01:00 0HL15ICJPTQ34 [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1501.6385ms (afa2e885)
+2016-12-16T10:10:57.2255433+01:00 0HL15ICJPTQ34 [INF] Request finished in 1801.7284ms 200 image/jpeg (15c52c40)
+2016-12-16T10:10:57.2435452+01:00 0HL15ICJPTQ37 [INF] Executed DbCommand (58ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:10:57.2675559+01:00 0HL15ICJPTQ33 [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:10:57.2825572+01:00 0HL15ICJPTQ3A [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:10:57.3085556+01:00 0HL15ICJPTQ3A [INF] >> Key: id; Value 10 (df16b82e)
+2016-12-16T10:10:57.3275558+01:00 0HL15ICJPTQ33 [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1750.2543ms (afa2e885)
+2016-12-16T10:10:57.3365558+01:00 0HL15ICJPTQ33 [INF] Request finished in 1910.2048ms 200 image/jpeg (15c52c40)
+2016-12-16T10:10:57.3565608+01:00 0HL15ICJPTQ32 [INF] Request finished in 1680.2777ms 200 image/jpeg (15c52c40)
+2016-12-16T10:10:57.3580621+01:00 0HL15ICJPTQ3A [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["10"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:10:57.3715674+01:00 0HL15ICJPTQ3B [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/13   (e5be5b71)
+2016-12-16T10:10:57.3995684+01:00 0HL15ICJPTQ3B [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:10:57.4255702+01:00 0HL15ICJPTQ3A [INF] Executed DbCommand (15ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:10:57.4395686+01:00 0HL15ICJPTQ3B [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:10:57.4675832+01:00 0HL15ICJPTQ3B [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:10:57.4875795+01:00 0HL15ICJPTQ3B [INF] >> Key: id; Value 13 (95cf25a0)
+2016-12-16T10:10:57.5095800+01:00 0HL15ICJPTQ3B [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["13"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:10:57.5285818+01:00 0HL15ICJPTQ3B [INF] Executed DbCommand (8ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:10:57.6726017+01:00 0HL15ICJPTQ35 [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:10:57.7026001+01:00 0HL15ICJPTQ37 [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:10:57.7816150+01:00 0HL15ICJPTQ37 [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1207.441ms (afa2e885)
+2016-12-16T10:10:57.7816150+01:00 0HL15ICJPTQ35 [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1734.1924ms (afa2e885)
+2016-12-16T10:10:57.8126132+01:00 0HL15ICJPTQ35 [INF] Request finished in 1836.4342ms 200 image/jpeg (15c52c40)
+2016-12-16T10:10:57.8346122+01:00 0HL15ICJPTQ37 [INF] Request finished in 1317.9673ms 200 image/jpeg (15c52c40)
+2016-12-16T10:10:57.8876208+01:00 0HL15ICJPTQ3A [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:10:57.9006217+01:00 0HL15ICJPTQ3A [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 844.0968ms (afa2e885)
+2016-12-16T10:10:57.9306235+01:00 0HL15ICJPTQ3A [INF] Request finished in 1114.7491ms 200 image/jpeg (15c52c40)
+2016-12-16T10:10:57.9491238+01:00 0HL15ICJPTQ3B [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:10:57.9756285+01:00 0HL15ICJPTQ3B [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 578.3346ms (afa2e885)
+2016-12-16T10:10:58.0096293+01:00 0HL15ICJPTQ3B [INF] Request finished in 626.8745ms 200 image/jpeg (15c52c40)
+2016-12-16T10:10:58.0471363+01:00 0HL15ICJPTQ36 [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:10:58.0926386+01:00 0HL15ICJPTQ36 [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1963.8828ms (afa2e885)
+2016-12-16T10:10:58.1176439+01:00 0HL15ICJPTQ36 [INF] Request finished in 2055.5285ms 200 image/jpeg (15c52c40)
+2016-12-16T10:10:58.1226419+01:00 0HL15ICJPTQ38 [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:10:58.1286428+01:00 0HL15ICJPTQ38 [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1599.2163ms (afa2e885)
+2016-12-16T10:10:58.1326418+01:00 0HL15ICJPTQ38 [INF] Request finished in 1692.4509ms 200 image/jpeg (15c52c40)
+2016-12-16T10:10:58.1996503+01:00 0HL15ICJPTQ39 [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:10:58.2046513+01:00 0HL15ICJPTQ39 [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 1267.2921ms (afa2e885)
+2016-12-16T10:10:58.2076512+01:00 0HL15ICJPTQ39 [INF] Request finished in 1384.8561ms 200 image/jpeg (15c52c40)
+2016-12-16T10:11:01.0679584+01:00 0HL15ICJPTQ3C [INF] Request starting HTTP/1.1 GET http://localhost:3493/   (e5be5b71)
+2016-12-16T10:11:01.0729598+01:00 0HL15ICJPTQ3C [INF] Executing action method "PhotoSharingApplication.Controllers.HomeController.Index (PhotoSharingApplication)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:11:01.0759574+01:00 0HL15ICJPTQ3C [INF] Executing ViewResult, running view at path "/Views/Home/Index.cshtml". (9707eebe)
+2016-12-16T10:11:01.0969573+01:00 0HL15ICJPTQ3C [INF] Executed DbCommand (5ms) [Parameters=[@__p_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title], [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [Photos] AS [p]
+LEFT JOIN [AspNetUsers] AS [a] ON [p].[ApplicationUserId] = [a].[Id]
+ORDER BY [p].[CreatedDate] DESC (6438bdd5)
+2016-12-16T10:11:01.4020080+01:00 0HL15ICJPTQ3C [INF] Executed action "PhotoSharingApplication.Controllers.HomeController.Index (PhotoSharingApplication)" in 330.7091ms (afa2e885)
+2016-12-16T10:11:01.4050079+01:00 0HL15ICJPTQ3C [INF] Request finished in 337.7057ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-16T10:11:01.4370180+01:00 0HL15ICJPTQ3D [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/2   (e5be5b71)
+2016-12-16T10:11:01.4380179+01:00 0HL15ICJPTQ3E [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/3   (e5be5b71)
+2016-12-16T10:11:01.4400190+01:00 0HL15ICJPTQ3F [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/1   (e5be5b71)
+2016-12-16T10:11:01.4620196+01:00 0HL15ICJPTQ3D [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:11:01.4850218+01:00 0HL15ICJPTQ3E [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:11:01.5075275+01:00 0HL15ICJPTQ3F [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:11:01.5312441+01:00 0HL15ICJPTQ3E [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:11:01.5542395+01:00 0HL15ICJPTQ3D [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:11:01.5562396+01:00 0HL15ICJPTQ3F [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:11:01.5792411+01:00 0HL15ICJPTQ3D [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:11:01.6012755+01:00 0HL15ICJPTQ3F [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:11:01.6247426+01:00 0HL15ICJPTQ3E [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:11:01.6487843+01:00 0HL15ICJPTQ3D [INF] >> Key: id; Value 2 (04a4ceb4)
+2016-12-16T10:11:01.6497441+01:00 0HL15ICJPTQ3F [INF] >> Key: id; Value 1 (12676a39)
+2016-12-16T10:11:01.6752452+01:00 0HL15ICJPTQ3D [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["2"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:11:01.6752452+01:00 0HL15ICJPTQ3E [INF] >> Key: id; Value 3 (45f9515c)
+2016-12-16T10:11:01.6772478+01:00 0HL15ICJPTQ3E [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["3"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:11:01.6802470+01:00 0HL15ICJPTQ3F [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["1"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:11:01.6932456+01:00 0HL15ICJPTQ3E [INF] Executed DbCommand (5ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:11:01.7192462+01:00 0HL15ICJPTQ3F [INF] Executed DbCommand (11ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:11:01.7222453+01:00 0HL15ICJPTQ3D [INF] Executed DbCommand (13ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[PhotoFile], [m].[ImageMimeType]
+FROM [Photos] AS [m]
+WHERE [m].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:11:01.8852606+01:00 0HL15ICJPTQ3E [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:11:01.9092607+01:00 0HL15ICJPTQ3F [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:11:01.9112755+01:00 0HL15ICJPTQ3E [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 446.8235ms (afa2e885)
+2016-12-16T10:11:01.9377738+01:00 0HL15ICJPTQ3E [INF] Request finished in 498.0311ms 200 image/jpeg (15c52c40)
+2016-12-16T10:11:01.9402741+01:00 0HL15ICJPTQ3F [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 472.2698ms (afa2e885)
+2016-12-16T10:11:01.9627764+01:00 0HL15ICJPTQ3F [INF] Request finished in 527.7618ms 200 image/jpeg (15c52c40)
+2016-12-16T10:11:02.0147738+01:00 0HL15ICJPTQ3D [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:11:02.0202748+01:00 0HL15ICJPTQ3D [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 576.6177ms (afa2e885)
+2016-12-16T10:11:02.0232743+01:00 0HL15ICJPTQ3D [INF] Request finished in 607.6911ms 200 image/jpeg (15c52c40)
+2016-12-16T10:11:06.4122355+01:00 0HL15ICJPTQ3G [INF] Request starting HTTP/1.1 GET http://localhost:3493/Account/Login   (e5be5b71)
+2016-12-16T10:11:06.4342470+01:00 0HL15ICJPTQ3G [INF] Executing action method "PhotoSharingApplication.Controllers.AccountController.Login (PhotoSharingApplication)" with arguments ([""]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:11:06.5840903+01:00 0HL15ICJPTQ3G [INF] Executing ViewResult, running view at path "/Views/Account/Login.cshtml". (9707eebe)
+2016-12-16T10:11:06.7966167+01:00 0HL15ICJPTQ3G [INF] Executed action "PhotoSharingApplication.Controllers.AccountController.Login (PhotoSharingApplication)" in 373.2802ms (afa2e885)
+2016-12-16T10:11:06.8211254+01:00 0HL15ICJPTQ3G [INF] Request finished in 389.5479ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-16T10:11:06.8504204+01:00 0HL15ICJPTQ3H [INF] Request starting HTTP/1.1 GET http://localhost:3493/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js   (e5be5b71)
+2016-12-16T10:11:06.8524201+01:00 0HL15ICJPTQ3I [INF] Request starting HTTP/1.1 GET http://localhost:3493/lib/jquery-validation/dist/jquery.validate.js   (e5be5b71)
+2016-12-16T10:11:06.8554188+01:00 0HL15ICJPTQ3H [INF] Sending file. Request path: '"/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"'. Physical path: '"C:\CM\Web\ASPNETCORE_NEW\Labs\LabFiles\Mod01\PhotoSharingApplication\src\PhotoSharingApplication\wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js"' (27b0a520)
+2016-12-16T10:11:06.8584229+01:00 0HL15ICJPTQ3I [INF] Sending file. Request path: '"/lib/jquery-validation/dist/jquery.validate.js"'. Physical path: '"C:\CM\Web\ASPNETCORE_NEW\Labs\LabFiles\Mod01\PhotoSharingApplication\src\PhotoSharingApplication\wwwroot\lib\jquery-validation\dist\jquery.validate.js"' (27b0a520)
+2016-12-16T10:11:06.8654221+01:00 0HL15ICJPTQ3H [INF] Request finished in 13.4052ms 200 application/javascript (15c52c40)
+2016-12-16T10:11:06.8684201+01:00 0HL15ICJPTQ3I [INF] Request finished in 15.3754ms 200 application/javascript (15c52c40)
+2016-12-16T10:11:16.9546244+01:00 0HL15ICJPTQ3J [INF] Request starting HTTP/1.1 POST http://localhost:3493/Account/Login application/x-www-form-urlencoded 242 (e5be5b71)
+2016-12-16T10:11:17.0296717+01:00 0HL15ICJPTQ3J [INF] Executing action method "PhotoSharingApplication.Controllers.AccountController.Login (PhotoSharingApplication)" with arguments (["PhotoSharingApplication.Models.AccountViewModels.LoginViewModel", ""]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:11:17.0506833+01:00 0HL15ICJPTQ3J [INF] Executed DbCommand (4ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2016-12-16T10:11:17.1766990+01:00 0HL15ICJPTQ3J [INF] Executed DbCommand (5ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT [role].[Name]
+FROM [AspNetUserRoles] AS [userRole]
+INNER JOIN [AspNetRoles] AS [role] ON [userRole].[RoleId] = [role].[Id]
+WHERE [userRole].[UserId] = @__userId_0 (6438bdd5)
+2016-12-16T10:11:17.2006800+01:00 0HL15ICJPTQ3J [INF] Executed DbCommand (5ms) [Parameters=[@__user_Id_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT [uc].[Id], [uc].[ClaimType], [uc].[ClaimValue], [uc].[UserId]
+FROM [AspNetUserClaims] AS [uc]
+WHERE [uc].[UserId] = @__user_Id_0 (6438bdd5)
+2016-12-16T10:11:17.2265435+01:00 0HL15ICJPTQ3J [INF] AuthenticationScheme: "Identity.Application" signed in. (c66dd7e7)
+2016-12-16T10:11:17.2285450+01:00 0HL15ICJPTQ3J [INF] User logged in. (fdce0db4)
+2016-12-16T10:11:17.2335442+01:00 0HL15ICJPTQ3J [INF] Executing RedirectResult, redirecting to "/". (d98d540e)
+2016-12-16T10:11:17.2375424+01:00 0HL15ICJPTQ3J [INF] Executed action "PhotoSharingApplication.Controllers.AccountController.Login (PhotoSharingApplication)" in 277.4789ms (afa2e885)
+2016-12-16T10:11:17.2405442+01:00 0HL15ICJPTQ3J [INF] Request finished in 286.0084ms 302  (15c52c40)
+2016-12-16T10:11:17.2445439+01:00 0HL15ICJPTQ3K [INF] Request starting HTTP/1.1 GET http://localhost:3493/   (e5be5b71)
+2016-12-16T10:11:17.2615471+01:00 0HL15ICJPTQ3K [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-16T10:11:17.2645451+01:00 0HL15ICJPTQ3K [INF] Executing action method "PhotoSharingApplication.Controllers.HomeController.Index (PhotoSharingApplication)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:11:17.2675454+01:00 0HL15ICJPTQ3K [INF] Executing ViewResult, running view at path "/Views/Home/Index.cshtml". (9707eebe)
+2016-12-16T10:11:17.2765458+01:00 0HL15ICJPTQ3K [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title], [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [Photos] AS [p]
+LEFT JOIN [AspNetUsers] AS [a] ON [p].[ApplicationUserId] = [a].[Id]
+ORDER BY [p].[CreatedDate] DESC (6438bdd5)
+2016-12-16T10:11:17.5550759+01:00 0HL15ICJPTQ3K [INF] Executed action "PhotoSharingApplication.Controllers.HomeController.Index (PhotoSharingApplication)" in 291.3014ms (afa2e885)
+2016-12-16T10:11:17.5580758+01:00 0HL15ICJPTQ3K [INF] Request finished in 313.3374ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-16T10:11:17.5890755+01:00 0HL15ICJPTQ3L [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/2   (e5be5b71)
+2016-12-16T10:11:17.6110806+01:00 0HL15ICJPTQ3M [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/3   (e5be5b71)
+2016-12-16T10:11:17.6120796+01:00 0HL15ICJPTQ3N [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/1   (e5be5b71)
+2016-12-16T10:11:17.6340828+01:00 0HL15ICJPTQ3L [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-16T10:11:17.6561150+01:00 0HL15ICJPTQ3M [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-16T10:11:17.6781167+01:00 0HL15ICJPTQ3L [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:11:17.7010834+01:00 0HL15ICJPTQ3N [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-16T10:11:17.7020832+01:00 0HL15ICJPTQ3L [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:11:17.7050846+01:00 0HL15ICJPTQ3L [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:11:17.7271580+01:00 0HL15ICJPTQ3L [INF] >> Key: id; Value 2 (04a4ceb4)
+2016-12-16T10:11:17.7501270+01:00 0HL15ICJPTQ3M [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:11:17.7721283+01:00 0HL15ICJPTQ3L [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["2"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:11:17.7931535+01:00 0HL15ICJPTQ3N [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:11:17.7961258+01:00 0HL15ICJPTQ3L [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:11:17.7981258+01:00 0HL15ICJPTQ3N [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:11:17.8021256+01:00 0HL15ICJPTQ3N [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:11:17.8251705+01:00 0HL15ICJPTQ3N [INF] >> Key: id; Value 1 (12676a39)
+2016-12-16T10:11:17.8271690+01:00 0HL15ICJPTQ3L [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 167.971ms (afa2e885)
+2016-12-16T10:11:17.8301692+01:00 0HL15ICJPTQ3M [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:11:17.8732003+01:00 0HL15ICJPTQ3M [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:11:17.8732003+01:00 0HL15ICJPTQ3N [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["1"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:11:17.8961704+01:00 0HL15ICJPTQ3L [INF] Request finished in 287.0196ms 200 image/jpeg (15c52c40)
+2016-12-16T10:11:17.8971680+01:00 0HL15ICJPTQ3M [INF] >> Key: id; Value 3 (45f9515c)
+2016-12-16T10:11:17.9216726+01:00 0HL15ICJPTQ3N [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:11:17.9231803+01:00 0HL15ICJPTQ3M [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["3"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:11:17.9261809+01:00 0HL15ICJPTQ3M [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:11:17.9351805+01:00 0HL15ICJPTQ3N [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 225.1749ms (afa2e885)
+2016-12-16T10:11:17.9601798+01:00 0HL15ICJPTQ3M [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 277.7458ms (afa2e885)
+2016-12-16T10:11:17.9611796+01:00 0HL15ICJPTQ3N [INF] Request finished in 371.3746ms 200 image/jpeg (15c52c40)
+2016-12-16T10:11:17.9641803+01:00 0HL15ICJPTQ3M [INF] Request finished in 395.7546ms 200 image/jpeg (15c52c40)
+2016-12-16T10:11:26.0813870+01:00 0HL15ICJPTQ3O [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/1   (e5be5b71)
+2016-12-16T10:11:26.0863881+01:00 0HL15ICJPTQ3O [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-16T10:11:26.0903810+01:00 0HL15ICJPTQ3O [INF] Controller: Photos; Action: Details (d807520f)
+2016-12-16T10:11:26.0933711+01:00 0HL15ICJPTQ3O [INF] >> Key: id; Value 1 (12676a39)
+2016-12-16T10:11:26.0958794+01:00 0HL15ICJPTQ3O [INF] >> Key: action; Value Details (74a6d4ed)
+2016-12-16T10:11:26.1179195+01:00 0HL15ICJPTQ3O [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:11:26.1219192+01:00 0HL15ICJPTQ3O [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.Details (PhotoSharingApplication)" with arguments (["1"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:11:26.1429161+01:00 0HL15ICJPTQ3O [INF] Executed DbCommand (6ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(2) [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title], [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [Photos] AS [p]
+LEFT JOIN [AspNetUsers] AS [a] ON [p].[ApplicationUserId] = [a].[Id]
+WHERE [p].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:11:26.2079382+01:00 0HL15ICJPTQ3O [INF] Executing ViewResult, running view at path "/Views/Photos/Details.cshtml". (9707eebe)
+2016-12-16T10:11:26.2269071+01:00 0HL15ICJPTQ3O [INF] Executed DbCommand (5ms) [Parameters=[@__photoId_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[ApplicationUserId], [c].[Body], [c].[PhotoId], [c].[Subject], [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [Comments] AS [c]
+LEFT JOIN [AspNetUsers] AS [a] ON [c].[ApplicationUserId] = [a].[Id]
+WHERE [c].[PhotoId] = @__photoId_0 (6438bdd5)
+2016-12-16T10:11:26.2439077+01:00 0HL15ICJPTQ3O [INF] Executed DbCommand (4ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2016-12-16T10:11:26.2469200+01:00 0HL15ICJPTQ3O [INF] Authorization failed for user: "fred@fred.fr". (a4ab1676)
+2016-12-16T10:11:26.2569078+01:00 0HL15ICJPTQ3O [INF] Executed DbCommand (4ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2016-12-16T10:11:26.2599092+01:00 0HL15ICJPTQ3O [INF] Authorization failed for user: "fred@fred.fr". (a4ab1676)
+2016-12-16T10:11:26.3899545+01:00 0HL15ICJPTQ3O [INF] Executed DbCommand (4ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2016-12-16T10:11:26.3939617+01:00 0HL15ICJPTQ3O [INF] Authorization was successful for user: "fred@fred.fr". (d7eb274a)
+2016-12-16T10:11:26.4084597+01:00 0HL15ICJPTQ3O [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.Details (PhotoSharingApplication)" in 319.7619ms (afa2e885)
+2016-12-16T10:11:26.4127902+01:00 0HL15ICJPTQ3O [INF] Request finished in 331.9411ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-16T10:11:26.4227870+01:00 0HL15ICJPTQ3P [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/1   (e5be5b71)
+2016-12-16T10:11:26.4257880+01:00 0HL15ICJPTQ3P [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-16T10:11:26.4277869+01:00 0HL15ICJPTQ3P [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:11:26.4297885+01:00 0HL15ICJPTQ3P [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:11:26.4317889+01:00 0HL15ICJPTQ3P [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:11:26.4548202+01:00 0HL15ICJPTQ3P [INF] >> Key: id; Value 1 (12676a39)
+2016-12-16T10:11:26.4567870+01:00 0HL15ICJPTQ3P [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["1"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:11:26.4587890+01:00 0HL15ICJPTQ3P [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:11:26.4637866+01:00 0HL15ICJPTQ3P [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 36.0808ms (afa2e885)
+2016-12-16T10:11:26.4667876+01:00 0HL15ICJPTQ3P [INF] Request finished in 44.1342ms 200 image/jpeg (15c52c40)
+2016-12-16T10:12:09.3658168+01:00 0HL15ICJPTQ3Q [INF] Request starting HTTP/1.1 POST http://localhost:3493/Comments/Create?photoId=1 application/x-www-form-urlencoded; charset=UTF-8 308 (e5be5b71)
+2016-12-16T10:12:09.3833173+01:00 0HL15ICJPTQ3Q [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-16T10:12:09.3913172+01:00 0HL15ICJPTQ3Q [INF] Authorization was successful for user: "fred@fred.fr". (d7eb274a)
+2016-12-16T10:12:09.4038585+01:00 0HL15ICJPTQ3Q [INF] Executing action method "PhotoSharingApplication.Controllers.CommentsController.Create (PhotoSharingApplication)" with arguments (["PhotoSharingApplication.Models.Comment", "1"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:12:09.4138553+01:00 0HL15ICJPTQ3Q [INF] Executed DbCommand (4ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2016-12-16T10:12:09.4278575+01:00 0HL15ICJPTQ3Q [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (Size = 4000), @p2='?', @p3='?' (Size = 250)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Comments] ([ApplicationUserId], [Body], [PhotoId], [Subject])
+VALUES (@p0, @p1, @p2, @p3);
+SELECT [Id]
+FROM [Comments]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity(); (6438bdd5)
+2016-12-16T10:12:09.4378570+01:00 0HL15ICJPTQ3Q [INF] Executing ViewComponentResult, running "CommentsForPhoto". (a906d40a)
+2016-12-16T10:12:09.4458580+01:00 0HL15ICJPTQ3Q [INF] Executed DbCommand (3ms) [Parameters=[@__photoId_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[ApplicationUserId], [c].[Body], [c].[PhotoId], [c].[Subject], [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [Comments] AS [c]
+LEFT JOIN [AspNetUsers] AS [a] ON [c].[ApplicationUserId] = [a].[Id]
+WHERE [c].[PhotoId] = @__photoId_0 (6438bdd5)
+2016-12-16T10:12:09.4568599+01:00 0HL15ICJPTQ3Q [INF] Executed DbCommand (3ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2016-12-16T10:12:09.4588573+01:00 0HL15ICJPTQ3Q [INF] Authorization failed for user: "fred@fred.fr". (a4ab1676)
+2016-12-16T10:12:09.4668552+01:00 0HL15ICJPTQ3Q [INF] Executed DbCommand (4ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2016-12-16T10:12:09.4698593+01:00 0HL15ICJPTQ3Q [INF] Authorization failed for user: "fred@fred.fr". (a4ab1676)
+2016-12-16T10:12:09.4793754+01:00 0HL15ICJPTQ3Q [INF] Executed DbCommand (4ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2016-12-16T10:12:09.4823749+01:00 0HL15ICJPTQ3Q [INF] Authorization was successful for user: "fred@fred.fr". (d7eb274a)
+2016-12-16T10:12:09.4888758+01:00 0HL15ICJPTQ3Q [INF] Executed action "PhotoSharingApplication.Controllers.CommentsController.Create (PhotoSharingApplication)" in 101.2415ms (afa2e885)
+2016-12-16T10:12:09.4928724+01:00 0HL15ICJPTQ3Q [INF] Request finished in 131.0107ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-16T10:12:34.5354062+01:00 0HL15ICJPTQ3R [INF] Request starting HTTP/1.1 POST http://localhost:3493/Account/LogOff application/x-www-form-urlencoded 225 (e5be5b71)
+2016-12-16T10:12:34.5389064+01:00 0HL15ICJPTQ3R [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-16T10:12:34.5424077+01:00 0HL15ICJPTQ3R [INF] Authorization was successful for user: "fred@fred.fr". (d7eb274a)
+2016-12-16T10:12:34.5449080+01:00 0HL15ICJPTQ3R [INF] Executing action method "PhotoSharingApplication.Controllers.AccountController.LogOff (PhotoSharingApplication)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:12:34.5619497+01:00 0HL15ICJPTQ3R [INF] AuthenticationScheme: "Identity.Application" signed out. (d3f50c8d)
+2016-12-16T10:12:34.5659604+01:00 0HL15ICJPTQ3R [INF] AuthenticationScheme: "Identity.External" signed out. (d3f50c8d)
+2016-12-16T10:12:34.5679491+01:00 0HL15ICJPTQ3R [INF] AuthenticationScheme: "Identity.TwoFactorUserId" signed out. (d3f50c8d)
+2016-12-16T10:12:34.5719556+01:00 0HL15ICJPTQ3R [INF] User logged out. (f9c27106)
+2016-12-16T10:12:34.5749540+01:00 0HL15ICJPTQ3R [INF] Executing RedirectResult, redirecting to "/". (d98d540e)
+2016-12-16T10:12:34.5969775+01:00 0HL15ICJPTQ3R [INF] Executed action "PhotoSharingApplication.Controllers.AccountController.LogOff (PhotoSharingApplication)" in 35.8018ms (afa2e885)
+2016-12-16T10:12:34.5999506+01:00 0HL15ICJPTQ3R [INF] Request finished in 65.4234ms 302  (15c52c40)
+2016-12-16T10:12:34.6039473+01:00 0HL15ICJPTQ3S [INF] Request starting HTTP/1.1 GET http://localhost:3493/   (e5be5b71)
+2016-12-16T10:12:34.6069502+01:00 0HL15ICJPTQ3S [INF] Executing action method "PhotoSharingApplication.Controllers.HomeController.Index (PhotoSharingApplication)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:12:34.6109499+01:00 0HL15ICJPTQ3S [INF] Executing ViewResult, running view at path "/Views/Home/Index.cshtml". (9707eebe)
+2016-12-16T10:12:34.6179461+01:00 0HL15ICJPTQ3S [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title], [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [Photos] AS [p]
+LEFT JOIN [AspNetUsers] AS [a] ON [p].[ApplicationUserId] = [a].[Id]
+ORDER BY [p].[CreatedDate] DESC (6438bdd5)
+2016-12-16T10:12:34.8974757+01:00 0HL15ICJPTQ3S [INF] Executed action "PhotoSharingApplication.Controllers.HomeController.Index (PhotoSharingApplication)" in 290.9649ms (afa2e885)
+2016-12-16T10:12:34.9004741+01:00 0HL15ICJPTQ3S [INF] Request finished in 296.8193ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-16T10:12:34.9104743+01:00 0HL15ICJPTQ3T [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/1   (e5be5b71)
+2016-12-16T10:12:34.9339825+01:00 0HL15ICJPTQ3U [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/2   (e5be5b71)
+2016-12-16T10:12:34.9354818+01:00 0HL15ICJPTQ3V [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/3   (e5be5b71)
+2016-12-16T10:12:34.9584950+01:00 0HL15ICJPTQ3U [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:12:34.9814957+01:00 0HL15ICJPTQ3T [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:12:35.0034974+01:00 0HL15ICJPTQ3T [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:12:35.0055035+01:00 0HL15ICJPTQ3V [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:12:35.0300156+01:00 0HL15ICJPTQ3T [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:12:35.0310147+01:00 0HL15ICJPTQ3V [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:12:35.0525198+01:00 0HL15ICJPTQ3T [INF] >> Key: id; Value 1 (12676a39)
+2016-12-16T10:12:35.0545169+01:00 0HL15ICJPTQ3U [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:12:35.0805284+01:00 0HL15ICJPTQ3V [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:12:35.0805284+01:00 0HL15ICJPTQ3T [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["1"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:12:35.1015461+01:00 0HL15ICJPTQ3V [INF] >> Key: id; Value 3 (45f9515c)
+2016-12-16T10:12:35.1245215+01:00 0HL15ICJPTQ3U [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:12:35.1475622+01:00 0HL15ICJPTQ3T [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:12:35.1485625+01:00 0HL15ICJPTQ3V [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["3"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:12:35.1715613+01:00 0HL15ICJPTQ3U [INF] >> Key: id; Value 2 (04a4ceb4)
+2016-12-16T10:12:35.1935652+01:00 0HL15ICJPTQ3V [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:12:35.1995642+01:00 0HL15ICJPTQ3U [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["2"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:12:35.2045656+01:00 0HL15ICJPTQ3U [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:12:35.2215640+01:00 0HL15ICJPTQ3V [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 270.8308ms (afa2e885)
+2016-12-16T10:12:35.2385668+01:00 0HL15ICJPTQ3T [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 284.8115ms (afa2e885)
+2016-12-16T10:12:35.2715723+01:00 0HL15ICJPTQ3U [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 312.976ms (afa2e885)
+2016-12-16T10:12:35.2935732+01:00 0HL15ICJPTQ3V [INF] Request finished in 337.6789ms 200 image/jpeg (15c52c40)
+2016-12-16T10:12:35.2955713+01:00 0HL15ICJPTQ3T [INF] Request finished in 364.3213ms 200 image/jpeg (15c52c40)
+2016-12-16T10:12:35.2985727+01:00 0HL15ICJPTQ3U [INF] Request finished in 385.6905ms 200 image/jpeg (15c52c40)
+2016-12-16T10:12:37.5117115+01:00 0HL15ICJPTQ40 [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/1   (e5be5b71)
+2016-12-16T10:12:37.5152090+01:00 0HL15ICJPTQ40 [INF] Controller: Photos; Action: Details (d807520f)
+2016-12-16T10:12:37.5187141+01:00 0HL15ICJPTQ40 [INF] >> Key: id; Value 1 (12676a39)
+2016-12-16T10:12:37.5217094+01:00 0HL15ICJPTQ40 [INF] >> Key: action; Value Details (74a6d4ed)
+2016-12-16T10:12:37.5242117+01:00 0HL15ICJPTQ40 [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:12:37.5272097+01:00 0HL15ICJPTQ40 [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.Details (PhotoSharingApplication)" with arguments (["1"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:12:37.5352144+01:00 0HL15ICJPTQ40 [INF] Executed DbCommand (4ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(2) [p].[Id], [p].[ApplicationUserId], [p].[CreatedDate], [p].[Description], [p].[ImageMimeType], [p].[PhotoFile], [p].[Title], [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [Photos] AS [p]
+LEFT JOIN [AspNetUsers] AS [a] ON [p].[ApplicationUserId] = [a].[Id]
+WHERE [p].[Id] = @__id_0 (6438bdd5)
+2016-12-16T10:12:37.6217170+01:00 0HL15ICJPTQ40 [INF] Executing ViewResult, running view at path "/Views/Photos/Details.cshtml". (9707eebe)
+2016-12-16T10:12:37.6302198+01:00 0HL15ICJPTQ40 [INF] Executed DbCommand (4ms) [Parameters=[@__photoId_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[ApplicationUserId], [c].[Body], [c].[PhotoId], [c].[Subject], [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [Comments] AS [c]
+LEFT JOIN [AspNetUsers] AS [a] ON [c].[ApplicationUserId] = [a].[Id]
+WHERE [c].[PhotoId] = @__photoId_0 (6438bdd5)
+2016-12-16T10:12:37.6342202+01:00 0HL15ICJPTQ40 [INF] Authorization failed for user: null. (a4ab1676)
+2016-12-16T10:12:37.6382200+01:00 0HL15ICJPTQ40 [INF] Authorization failed for user: null. (a4ab1676)
+2016-12-16T10:12:37.6422227+01:00 0HL15ICJPTQ40 [INF] Authorization failed for user: null. (a4ab1676)
+2016-12-16T10:12:37.6442201+01:00 0HL15ICJPTQ40 [INF] Authorization failed for user: null. (a4ab1676)
+2016-12-16T10:12:37.6552209+01:00 0HL15ICJPTQ40 [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.Details (PhotoSharingApplication)" in 141.1129ms (afa2e885)
+2016-12-16T10:12:37.6592210+01:00 0HL15ICJPTQ40 [INF] Request finished in 148.5735ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-16T10:12:37.6712217+01:00 0HL15ICJPTQ41 [INF] Request starting HTTP/1.1 GET http://localhost:3493/Photos/GetImage/1   (e5be5b71)
+2016-12-16T10:12:37.6742212+01:00 0HL15ICJPTQ41 [INF] Controller: Photos; Action: GetImage (bcda7ed8)
+2016-12-16T10:12:37.6772214+01:00 0HL15ICJPTQ41 [INF] >> Key: controller; Value Photos (a50cb0c1)
+2016-12-16T10:12:37.6792207+01:00 0HL15ICJPTQ41 [INF] >> Key: action; Value GetImage (6f268279)
+2016-12-16T10:12:37.6822213+01:00 0HL15ICJPTQ41 [INF] >> Key: id; Value 1 (12676a39)
+2016-12-16T10:12:37.6852220+01:00 0HL15ICJPTQ41 [INF] Executing action method "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" with arguments (["1"]) - ModelState is Valid (ba7f4ac2)
+2016-12-16T10:12:37.6912210+01:00 0HL15ICJPTQ41 [INF] Executing FileResult, sending file as "" (3a97f597)
+2016-12-16T10:12:37.6962213+01:00 0HL15ICJPTQ41 [INF] Executed action "PhotoSharingApplication.Controllers.PhotosController.GetImage (PhotoSharingApplication)" in 21.4873ms (afa2e885)
+2016-12-16T10:12:37.6992215+01:00 0HL15ICJPTQ41 [INF] Request finished in 27.7457ms 200 image/jpeg (15c52c40)

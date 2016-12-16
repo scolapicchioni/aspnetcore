@@ -1,0 +1,154 @@
+https://github.com/aspnet/Identity/blob/dev/src/Microsoft.AspNetCore.Identity/BuilderExtensions.cs
+public static IApplicationBuilder UseIdentity(this IApplicationBuilder app)
+  app.ApplicationServices.GetService<IdentityMarkerService>();
+  var options = app.ApplicationServices.GetRequiredService<IOptions<IdentityOptions>>().Value;
+  app.UseCookieAuthentication(options.Cookies.ExternalCookie);
+  app.UseCookieAuthentication(options.Cookies.TwoFactorRememberMeCookie);
+  app.UseCookieAuthentication(options.Cookies.TwoFactorUserIdCookie);
+  app.UseCookieAuthentication(options.Cookies.ApplicationCookie);
+
+https://github.com/aspnet/Identity/blob/dev/src/Microsoft.AspNetCore.Identity/IdentityBuilder.cs
+  public virtual IdentityBuilder AddDefaultTokenProviders() {  
+    var dataProtectionProviderType = typeof(DataProtectorTokenProvider<>).MakeGenericType(UserType);
+    var phoneNumberProviderType = typeof(PhoneNumberTokenProvider<>).MakeGenericType(UserType);
+    var emailTokenProviderType = typeof(EmailTokenProvider<>).MakeGenericType(UserType);
+    return AddTokenProvider(TokenOptions.DefaultProvider, dataProtectionProviderType)
+      .AddTokenProvider(TokenOptions.DefaultEmailProvider, emailTokenProviderType) 
+      .AddTokenProvider(TokenOptions.DefaultPhoneProvider, phoneNumberProviderType);
+}
+
+https://github.com/aspnet/Identity/blob/dev/src/Microsoft.AspNetCore.Identity/IdentityCookieOptions.cs
+public IdentityCookieOptions() {
+  // Configure all of the cookie middlewares
+  ApplicationCookie = new CookieAuthenticationOptions {  
+    AuthenticationScheme = DefaultApplicationScheme,
+    AutomaticAuthenticate = true,
+    AutomaticChallenge = true,
+    LoginPath = new PathString("/Account/Login"),
+    Events = new CookieAuthenticationEvents{ 
+      OnValidatePrincipal = SecurityStampValidator.ValidatePrincipalAsync
+    }
+};
+
+
+https://github.com/aspnet/Identity/blob/dev/src/Microsoft.AspNetCore.Identity/IdentityServiceCollectionExtensions.cs
+public static IdentityBuilder AddIdentity<TUser, TRole>(
+  this IServiceCollection services,
+  Action<IdentityOptions> setupAction)
+  where TUser : class
+  where TRole : class {
+    // Services used by identity
+    services.AddAuthentication(options => { 
+      // This is the Default value for ExternalCookieAuthenticationScheme
+      options.SignInScheme = new IdentityCookieOptions().ExternalCookieAuthenticationScheme;
+    });
+
+    services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+    services.TryAddSingleton<IdentityMarkerService>();
+    services.TryAddScoped<IUserValidator<TUser>, UserValidator<TUser>>();
+    services.TryAddScoped<IPasswordValidator<TUser>, PasswordValidator<TUser>>();
+    services.TryAddScoped<IPasswordHasher<TUser>, PasswordHasher<TUser>>();
+    services.TryAddScoped<ILookupNormalizer, UpperInvariantLookupNormalizer>();
+    services.TryAddScoped<IRoleValidator<TRole>, RoleValidator<TRole>>();
+    services.TryAddScoped<IdentityErrorDescriber>();
+    services.TryAddScoped<ISecurityStampValidator, SecurityStampValidator<TUser>>();
+    services.TryAddScoped<IUserClaimsPrincipalFactory<TUser>, UserClaimsPrincipalFactory<TUser, TRole>>();
+    services.TryAddScoped<UserManager<TUser>, UserManager<TUser>>();
+    services.TryAddScoped<SignInManager<TUser>, SignInManager<TUser>>();
+    services.TryAddScoped<RoleManager<TRole>, RoleManager<TRole>>();
+
+    if (setupAction != null) { 
+      services.Configure(setupAction);
+    }
+
+    return new IdentityBuilder(typeof(TUser), typeof(TRole), services);
+}
+
+https://github.com/aspnet/Identity/blob/dev/src/Microsoft.AspNetCore.Identity/SignInManager.cs
+ public virtual async Task SignInAsync(TUser user, AuthenticationProperties authenticationProperties, string authenticationMethod = null) {  
+    var userPrincipal = await CreateUserPrincipalAsync(user);
+    // Review: should we guard against CreateUserPrincipal returning null?
+    if (authenticationMethod != null){  
+      userPrincipal.Identities.First().AddClaim(new Claim(ClaimTypes.AuthenticationMethod, authenticationMethod));
+    }
+    await Context.Authentication.SignInAsync(Options.Cookies.ApplicationCookieAuthenticationScheme,
+      userPrincipal, authenticationProperties ?? new AuthenticationProperties());
+}
+
+https://github.com/aspnet/Identity/blob/dev/src/Microsoft.AspNetCore.Identity/UserClaimsPrincipalFactory.cs
+public virtual async Task<ClaimsPrincipal> CreateAsync(TUser user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+            var userId = await UserManager.GetUserIdAsync(user);
+            var userName = await UserManager.GetUserNameAsync(user);
+            var id = new ClaimsIdentity(Options.Cookies.ApplicationCookieAuthenticationScheme,
+                Options.ClaimsIdentity.UserNameClaimType,
+                Options.ClaimsIdentity.RoleClaimType);
+            id.AddClaim(new Claim(Options.ClaimsIdentity.UserIdClaimType, userId));
+            id.AddClaim(new Claim(Options.ClaimsIdentity.UserNameClaimType, userName));
+            if (UserManager.SupportsUserSecurityStamp)
+            {
+                id.AddClaim(new Claim(Options.ClaimsIdentity.SecurityStampClaimType, 
+                    await UserManager.GetSecurityStampAsync(user)));
+            }
+            if (UserManager.SupportsUserRole)
+            {
+                var roles = await UserManager.GetRolesAsync(user);
+                foreach (var roleName in roles)
+                {
+                    id.AddClaim(new Claim(Options.ClaimsIdentity.RoleClaimType, roleName));
+                    if (RoleManager.SupportsRoleClaims)
+                    {
+                        var role = await RoleManager.FindByNameAsync(roleName);
+                        if (role != null)
+                        {
+                            id.AddClaims(await RoleManager.GetClaimsAsync(role));
+                        }
+                    }
+                }
+            }
+            if (UserManager.SupportsUserClaim)
+            {
+                id.AddClaims(await UserManager.GetClaimsAsync(user));
+            }
+            return new ClaimsPrincipal(id);
+        }
+
+
+https://github.com/aspnet/Identity/blob/dev/src/Microsoft.AspNetCore.Identity/UserManager.cs
+public virtual async Task<string> GetUserNameAsync(TUser user) {  
+  ThrowIfDisposed();  
+  if (user == null){ 
+    throw new ArgumentNullException(nameof(user));
+  }
+  return await Store.GetUserNameAsync(user, CancellationToken);
+}
+
+
+
+https://github.com/aspnet/Identity/blob/dev/src/Microsoft.AspNetCore.Identity.EntityFrameworkCore/UserStore.cs
+THIS IS THE MOST IMPORTANT SO FAR
+
+https://github.com/aspnet/Security/blob/master/src/Microsoft.AspNetCore.Authentication.Cookies/CookieAppBuilderExtensions.cs
+public static IApplicationBuilder UseCookieAuthentication(this IApplicationBuilder app, CookieAuthenticationOptions options){ 
+  if (app == null) {
+    throw new ArgumentNullException(nameof(app));
+  }
+  if (options == null) {
+    throw new ArgumentNullException(nameof(options));
+ }
+
+ return app.UseMiddleware<CookieAuthenticationMiddleware>(Options.Create(options));
+}
+
+https://github.com/aspnet/Security/blob/master/src/Microsoft.AspNetCore.Authentication.Cookies/CookieAuthenticationMiddleware.cs
+
+
+https://github.com/aspnet/Security/blob/master/src/Microsoft.AspNetCore.Authentication.Cookies/CookieAuthenticationHandler.cs
+
+
+https://github.com/aspnet/Security/blob/master/src/Microsoft.AspNetCore.Authorization/Infrastructure/RolesAuthorizationRequirement.cs
+https://github.com/aspnet/Security/tree/master/src

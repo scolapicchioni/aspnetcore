@@ -1,0 +1,26 @@
+@model IEnumerable<PhotoSharingApplication.Models.Photo>
+
+@foreach (var item in Model)
+{
+    <h3>"@item.Title"</h3>
+
+    if (item.PhotoFile != null)
+    {
+        <img width="200" class="img-thumbnail" src="@Url.Action("GetImage", "Photos", new { id = item.Id })" />
+    }
+
+    <p>
+        Created By:
+        @Html.DisplayFor(model => item.Owner.UserName)
+    </p>
+
+    <p>
+        Created On:
+        @Html.DisplayFor(model => item.CreatedDate)
+    </p>
+
+    <a asp-action="Details" asp-controller="Photos" asp-route-id="@item.Id" class="btn btn-info">
+        <span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Display
+    </a> 
+
+}

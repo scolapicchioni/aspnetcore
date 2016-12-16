@@ -1,0 +1,80 @@
+@model PhotoSharingApplication.Models.Photo
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Photo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        @if (Model.PhotoFile != null)
+        {
+        <dt>
+            @Html.DisplayNameFor(model => model.PhotoFile)
+        </dt>
+        <dd>
+            <img class="col-md-12 img-thumbnail" src="@Url.Action("GetImage", "Photos", new { id=Model.Id })" />
+        </dd>
+        }
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageMimeType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ImageMimeType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner.UserName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Owner.UserName)
+        </dd>
+    </dl>
+    <vc:comments-for-photo photo-id=@Model.Id></vc:comments-for-photo>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info">
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+    </a> 
+    |
+    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-info">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
+    </a>
+    |
+    <a asp-action="Index" class="btn btn-info">
+        <span class="glyphicon glyphicon-home" aria-hidden="true"></span> Back to List
+    </a>
+</div>
+
+
+@section Scripts{
+<environment names="Development">
+    <script src="~/lib/Microsoft.jQuery.Unobtrusive.Ajax/jquery.unobtrusive-ajax.js"></script>
+</environment>
+<environment names="Staging,Production">
+    <script src="http://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.unobtrusive-ajax.min.js"
+            asp-fallback-src="~/lib/Microsoft.jQuery.Unobtrusive.Ajax/jquery.unobtrusive-ajax.min.js"
+            asp-fallback-test="window.jQuery && window.jQuery.validator && window.jQuery.validator.unobtrusive">
+    </script>
+</environment>
+}

@@ -1,0 +1,17 @@
+        private static async Task addPhoto(PhotoSharingContext context, Photo toAdd) {
+            var found = await context.Photos.FirstOrDefaultAsync(p => p.Title == toAdd.Title);
+            if (found == null) context.Photos.Add(toAdd);
+        }
+
+        //This gets a byte array for a file at the path specified
+        //The path is relative to the route of the web site
+        //It is used to seed images
+        private static byte[] getFileBytes(string path){
+            FileStream fileOnDisk = new FileStream(path, FileMode.Open);
+            byte[] fileBytes;
+            using (BinaryReader br = new BinaryReader(fileOnDisk))
+            {
+                fileBytes = br.ReadBytes((int)fileOnDisk.Length);
+            }
+            return fileBytes;
+        }

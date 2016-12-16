@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AC15DD23-1833-44E4-8A0A-B664F498B575}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{12943B9C-E22A-4F60-A3AD-9E0E22FD1FBE}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PhotoSharingApplication", "src\PhotoSharingApplication\PhotoSharingApplication.xproj", "{917046D8-068E-4FDD-A996-D5D0AFC81D84}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{917046D8-068E-4FDD-A996-D5D0AFC81D84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{917046D8-068E-4FDD-A996-D5D0AFC81D84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{917046D8-068E-4FDD-A996-D5D0AFC81D84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{917046D8-068E-4FDD-A996-D5D0AFC81D84}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{917046D8-068E-4FDD-A996-D5D0AFC81D84} = {AC15DD23-1833-44E4-8A0A-B664F498B575}
+	EndGlobalSection
+EndGlobal

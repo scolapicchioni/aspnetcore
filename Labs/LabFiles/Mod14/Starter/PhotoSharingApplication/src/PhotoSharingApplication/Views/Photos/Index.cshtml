@@ -1,0 +1,12 @@
+@{
+    ViewData["Title"] = "All Photos";
+}
+
+<h2>All Photos</h2>
+
+<p>
+    <a asp-action="Create" asp-controller="Photos" class="btn btn-info">
+       <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a Photo
+    </a></p>
+
+<vc:photo-gallery number="0"></vc:photo-gallery>

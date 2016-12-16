@@ -1,0 +1,52 @@
+@model IEnumerable<SecurityDemo.Models.Photo>
+@using SecurityDemo.AuthorizationHandlers
+@inject Microsoft.AspNetCore.Authorization.IAuthorizationService authorizationService
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+@if (SignInManager.IsSignedIn(User))
+{
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>@Html.DisplayNameFor(model=>model.Owner.UserName)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Owner.UserName)
+            </td>
+            <td>
+                @if (await authorizationService.AuthorizeAsync(User, item, PolicyNames.PhotoEdit))
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                }
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                @if (await authorizationService.AuthorizeAsync(User, item, PolicyNames.PhotoDelete))
+                {
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

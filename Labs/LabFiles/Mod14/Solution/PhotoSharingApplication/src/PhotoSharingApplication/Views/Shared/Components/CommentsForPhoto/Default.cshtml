@@ -1,0 +1,57 @@
+@model IEnumerable<PhotoSharingApplication.Models.Comment>
+@inject Microsoft.AspNetCore.Authorization.IAuthorizationService authorizationService
+@inject SignInManager<ApplicationUser> SignInManager
+
+<div id="comments-tool" class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Comments</h3>
+    </div>
+    <ul class="list-group" id="all-comments">
+        @foreach (var item in Model)
+        {
+            <li class="list-group-item">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Owner.UserName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(modelItem => item.Owner.UserName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Subject)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(modelitem => item.Subject)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Body)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(modelitem => item.Body)
+                    </dd>
+                </dl>
+                @if (await authorizationService.AuthorizeAsync(User, item, "CommentDelete"))
+                {
+                <a asp-action="Delete" asp-controller="Comments" asp-route-id="@item.Id" class="btn btn-info">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete This Comment
+                </a>
+                }
+            </li>
+        }
+    </ul>
+@if (SignInManager.IsSignedIn(User))
+{
+    <div id="addcomment" class="panel-footer">
+        <form asp-controller="Comments" asp-action="Create" asp-route-photoId="@ViewBag.PhotoId" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#comments-tool">
+            <p>
+                <vc:create-a-comment photo-id="@ViewBag.PhotoId"></vc:create-a-comment>
+            </p>
+        </form>        
+    </div>
+}
+</div>

@@ -1,0 +1,104 @@
+@{
+    ViewData["Title"] = "Search Photos By Title";
+}
+
+<h2>Search Photos By Title</h2>
+
+<!--This is the typeahead textbox that will show a scrollable dropdown with the titles containing the textbox value-->
+<div id="scrollable-dropdown-menu">
+    <input class="typeahead form-control" type="text" placeholder="Titles" id="title">
+</div>
+
+<!--Your new content will be displayed in here thanks to handlebars-->
+<div class="content-placeholder"></div>
+
+@section scripts{
+
+<environment names="Development">
+    <script src="~/lib/typeahead.js/dist/typeahead.bundle.js"></script>
+    <script src="~/lib/handlebars/handlebars.js"></script>
+    <link rel="stylesheet" href="~/css/search.css" />
+</environment>
+<environment names="Staging,Production">
+    <script src="https://github.com/twitter/typeahead.js"
+            asp-fallback-src="~/lib/typeahead.js/dist/typeahead.bundle.min.js"
+            asp-fallback-test="window.jQuery">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"
+            asp-fallback-src="~/lib/handlebars/handlebars.min.js"
+            asp-fallback-test="window.jQuery">
+    </script>
+    <link rel="stylesheet" href="~/css/search.min.css" asp-append-version="true" />
+</environment>
+
+
+<script id="photos-template" type="text/x-handlebars-template">
+    {{#each photos}}
+    <h3>"{{title}}"</h3>
+
+    <img width="200" class="img-thumbnail" src="{{image}}" />
+
+    <p>
+        Created By:
+        {{ownerName}}
+    </p>
+
+    <p>
+        Created On:
+        {{createdDate}}
+    </p>
+
+    <a href="/photos/{{id}}" class="btn btn-info">
+        <span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Display
+    </a> 
+    {{/each}}
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    // Constructs the suggestion engine
+    var titles = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.whitespace,
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url: '/api/search/titles/%QUERY', //invoke the Api Controller passing the title
+            wildcard: '%QUERY'
+        }
+    });
+
+    // Initializing the typeahead with remote dataset
+    $('.typeahead').typeahead({
+        hint: true,
+        highlight: true,
+        minLength: 1
+    }, {
+        name: 'titles',
+        source: titles,
+        limit: 10 
+    });
+
+    //handlebars
+    $('#title').keypress(function (e) {
+        if (e.which == 13) { //when the user presses Enter
+            $.getJSON(`/api/Search/photos/${$("#title").val()}`) //invoke the Api controller passing the title
+                .success(function (context) {
+                    console.log(context);
+
+                    // Grab the template script
+                    var theTemplateScript = $("#photos-template").html();
+
+                    // Compile the template
+                    var theTemplate = Handlebars.compile(theTemplateScript);
+
+                    // Pass our data to the template
+                    var theCompiledHtml = theTemplate(context);
+
+                    // Add the compiled html to the page
+                    $('.content-placeholder').html(theCompiledHtml);
+            });
+        }
+    });
+});
+
+</script>
+}
